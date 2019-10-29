@@ -1,0 +1,34 @@
+{
+  "name": "CS2102_Project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryansoh95/CS2102_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryansoh95/CS2102_Project/issues"
+  },
+  "homepage": "https://github.com/bryansoh95/CS2102_Project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.1",
+    "knex": "^0.19.5",
+    "morgan": "^1.9.1",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  }
+}
