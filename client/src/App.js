@@ -9,7 +9,14 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/" component={Login} />
+          <Route exact path="/home" component={Landing} />
+          <Route
+            exact
+            path="/home/modules/:moduleCode"
+            render={props => <Module {...props} moduleCode={":moduleCode"} />}
+          />
+          <Route exact path="/home/modules/past" component={PastModules} />
         </div>
       </Router>
     );
