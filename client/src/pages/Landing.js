@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class Landing extends Component {
   render() {
-    return <div>Landing/login page</div>;
+    return <div>Landing page</div>;
   }
 }
 
