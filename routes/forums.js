@@ -2,6 +2,24 @@ const express = require('express')
 const pool = require('../pool')
 const router = express.Router()
 
+const CHECK_PROF_TEACHES = `
+SELECT * 
+FROM Teaches
+WHERE module_code = $1
+AND puname = $2
+`
+
+const CREATE_NEW_FORUM = `
+INSERT INTO Forums
+VALUES ($1, $2)
+`
+
+const DELETE_FORUM = `
+DELETE FROM Forums
+WHERE module_code = $1
+AND category = $2
+`
+
 const GET_ALL_THREADS_FOR_COURSE = `
 SELECT * 
 FROM Threads
@@ -95,6 +113,58 @@ router.get('/course/:module_code/forum/:category/thread', (req, res, next) => {
             res.send('error!')
         } else {
             res.send(dbRes.rows)
+        }
+    })
+})
+
+router.post('/course/:module_code/forum/add', (req, res, next) => {
+    const data = {
+        module_code: req.body.module_code,
+        category: req.body.category,
+        puname: req.body.puname
+    }
+    pool.query(CHECK_PROF_TEACHES, [data.module_code, data.puname], (err, dbRes) => {
+        if (err) {
+            res.send('error')
+        } else {
+            if (dbRes.rowCount > 0) {
+                pool.query(CREATE_NEW_FORUM, [data.module_code, data.category], (err, dbRes) => {
+                    if (err) {
+                        res.send("error!")
+                    } else {
+                        res.send('add new forum success')
+                    }
+                })
+            } else {
+                res.send('error prof does not teach this course')
+            }
+        }
+    })
+})
+
+
+router.delete('/course/:module_code/forum/delete', (req, res, next) => {
+    const data = {
+        module_code: req.body.module_code,
+        category: req.body.category,
+        puname: req.body.puname
+    }
+    pool.query(CHECK_PROF_TEACHES, [data.module_code, data.puname], (err, dbRes) => {
+        if (err) {
+            res.send('error')
+        } else {
+            if (dbRes.rowCount > 0) {
+                pool.query(DELETE_FORUM, [data.module_code, data.category], (err, dbRes) => {
+                    if (err) {
+                        console.log(err)
+                        res.send("error!")
+                    } else {
+                        res.send('delete new forum success')
+                    }
+                })
+            } else {
+                res.send('error prof does not teach this course')
+            }
         }
     })
 })
