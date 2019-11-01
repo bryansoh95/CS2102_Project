@@ -156,7 +156,7 @@ INSERT INTO Passed
 VALUES ($1, $2, $3, $4, $5)
 `
 
-router.get('/course', (req, res, next) => {
+router.post('/course', (req, res, next) => {
     const data = {
         username: req.body.username
     }
@@ -164,6 +164,7 @@ router.get('/course', (req, res, next) => {
         if (err) {
             res.send('error')
         } else {
+            console.log(req.body)
             if (dbRes.rowCount === 1) {
                 pool.query(GET_STUDENT_COURSES, [data.username], (err, dbRes) => {
                     if (err) {
@@ -195,7 +196,7 @@ router.get('/course/all', (req, res, next) => {
     })
 })
 
-router.get('/course/passed', (req, res, next) => {
+router.post('/course/passed', (req, res, next) => {
     const data = {
         suname: req.body.suname
     }
@@ -233,7 +234,7 @@ router.post('/course/add', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/announcements', (req, res, next) => {
+router.post('/course/:module_code/announcements', (req, res, next) => {
     const data = {
         module_code: req.body.module_code
     }
@@ -272,7 +273,7 @@ router.post('/course/:module_code/announcements/new', (req, res, next) => {
     })
 })
 
-router.put('/course/:module_code/announcements/edit', (req, res, next) => {
+router.post('/course/:module_code/announcements/edit', (req, res, next) => {
     const data = {
         new_title: req.body.new_title,
         new_content: req.body.new_content,
@@ -289,7 +290,7 @@ router.put('/course/:module_code/announcements/edit', (req, res, next) => {
     })
 })
 
-router.delete('/course/:module_code/announcements/delete', (req, res, next) => {
+router.post('/course/:module_code/announcements/delete', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         title: req.body.title,
@@ -304,7 +305,7 @@ router.delete('/course/:module_code/announcements/delete', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/requests', (req, res, next) => {
+router.post('/course/:module_code/requests', (req, res, next) => {
     const data = {
         module_code: req.body.module_code
     }
@@ -317,7 +318,7 @@ router.get('/course/:module_code/requests', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/tutor', (req, res, next) => {
+router.post('/course/:module_code/tutor', (req, res, next) => {
     const data = {
         module_code: req.body.module_code
     }
@@ -356,7 +357,7 @@ router.post('/course/:module_code/tutor/add', (req, res, next) => {
     })
 })
 
-router.delete('/course/:module_code/tutor/delete', (req, res, next) => {
+router.post('/course/:module_code/tutor/delete', (req, res, next) => {
     const data = {
         suname: req.body.suname,
         module_code: req.body.module_code
@@ -384,7 +385,7 @@ router.post('/course/all/request', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/assessment', (req, res, next) => {
+router.post('/course/:module_code/assessment', (req, res, next) => {
     const data = {
         module_code: req.body.module_code
     }
@@ -423,7 +424,7 @@ router.post('/course/:module_code/assessment/add', (req, res, next) => {
     })
 })
 
-router.delete('/course/:module_code/assessment/delete', (req, res, next) => {
+router.post('/course/:module_code/assessment/delete', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         title: req.body.title,
@@ -448,7 +449,7 @@ router.delete('/course/:module_code/assessment/delete', (req, res, next) => {
     })
 })
 
-router.put('/course/:module_code/assessment/edit', (req, res, next) => {
+router.post('/course/:module_code/assessment/edit', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         old_title: req.body.old_title,
@@ -476,7 +477,7 @@ router.put('/course/:module_code/assessment/edit', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/gradebook', (req, res, next) => {
+router.post('/course/:module_code/gradebook', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         suname: req.body.suname

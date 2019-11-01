@@ -103,7 +103,7 @@ AND thread_title = $3
 AND LOWER(post_content) LIKE '%' || $4 || '%'
 `
 
-router.get('/course/:module_code/forum/:category/thread', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category
@@ -142,8 +142,7 @@ router.post('/course/:module_code/forum/add', (req, res, next) => {
     })
 })
 
-
-router.delete('/course/:module_code/forum/delete', (req, res, next) => {
+router.post('/course/:module_code/forum/delete', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
@@ -202,7 +201,7 @@ router.post('/course/:module_code/forum/:category/thread/edit', (req, res, next)
     })
 })
 
-router.delete('/course/:module_code/forum/:category/thread/delete', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread/delete', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
@@ -235,7 +234,7 @@ router.post('/course/:module_code/forum/:category/thread/edit', (req, res, next)
     })
 })
 
-router.get('/course/:module_code/forum/:category/thread/:thread_title/post', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread/:thread_title/post', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
@@ -274,7 +273,7 @@ router.post('/course/:module_code/forum/:category/thread/:thread_title/posts/new
     })
 })
 
-router.put('/course/:module_code/forum/:category/thread/:thread_title/posts/:post_id', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread/:thread_title/posts/:post_id', (req, res, next) => {
     const data = {
         post_content: req.body.post_content,
         uname: req.body.uname,
@@ -292,7 +291,7 @@ router.put('/course/:module_code/forum/:category/thread/:thread_title/posts/:pos
     })
 })
 
-router.delete('/course/:module_code/forum/:category/thread/:thread_title/posts/delete', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread/:thread_title/posts/delete', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
@@ -309,7 +308,7 @@ router.delete('/course/:module_code/forum/:category/thread/:thread_title/posts/d
     })
 })
 
-router.get('/course/:module_code/forum/:category/search', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/search', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
@@ -324,7 +323,7 @@ router.get('/course/:module_code/forum/:category/search', (req, res, next) => {
     })
 })
 
-router.get('/course/:module_code/forum/:category/thread/:thread_title/search', (req, res, next) => {
+router.post('/course/:module_code/forum/:category/thread/:thread_title/search', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
         category: req.body.category,
