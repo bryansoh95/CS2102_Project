@@ -164,7 +164,6 @@ router.post('/course', (req, res, next) => {
         if (err) {
             res.send('error')
         } else {
-            console.log(req.body)
             if (dbRes.rowCount === 1) {
                 pool.query(GET_STUDENT_COURSES, [data.username], (err, dbRes) => {
                     if (err) {
