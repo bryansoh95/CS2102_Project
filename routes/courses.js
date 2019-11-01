@@ -77,7 +77,27 @@ WHERE suname = $1
 AND module_code = $2
 `
 
-const GET_ALL_COURSE_ANNOUNCEMENTS = `
+const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_STUDENT = `
+SELECT *
+FROM Announcements 
+WHERE module_code IN (
+    SELECT module_code 
+    FROM Enrolls
+    WHERE suname = $1
+)
+`
+
+const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_PROF = `
+SELECT *
+FROM Announcements 
+WHERE module_code IN (
+    SELECT module_code 
+    FROM Teaches
+    WHERE puname = $1
+)
+`
+
+const GET_CURRENT_COURSE_ANNOUNCEMENTS = `
 SELECT *
 FROM Announcements 
 WHERE module_code = $1
@@ -185,6 +205,35 @@ router.post('/course', (req, res, next) => {
     })
 })
 
+router.post('/course/student', (req, res, next) => {
+    const data = {
+        username: req.body.username
+    }
+    pool.query(CHECK_IF_STUDENT, [data.username], (err, dbRes) => {
+        if (err) {
+            res.send('error')
+        } else {
+            if (dbRes.rowCount === 1) {
+                pool.query(GET_ALL_COURSE_ANNOUNCEMENTS_FOR_STUDENT, [data.username], (err, dbRes) => {
+                    if (err) {
+                        res.send("error!")
+                    } else {
+                        res.send(dbRes.rows)
+                    }
+                })
+            } else {
+                pool.query(GET_ALL_COURSE_ANNOUNCEMENTS_FOR_PROF, [data.username], (err, dbRes) => {
+                    if (err) {
+                        res.send('error')
+                    } else {
+                        res.send(dbRes.rows)
+                    }
+                })
+            }
+        }
+    })
+})
+
 router.get('/course/all', (req, res, next) => {
     pool.query(GET_ALL_COURSES, (err, dbRes) => {
         if (err) {
@@ -237,7 +286,7 @@ router.post('/course/:module_code/announcements', (req, res, next) => {
     const data = {
         module_code: req.body.module_code
     }
-    pool.query(GET_ALL_COURSE_ANNOUNCEMENTS, [data.module_code], (err, dbRes) => {
+    pool.query(GET_CURRENT_COURSE_ANNOUNCEMENTS, [data.module_code], (err, dbRes) => {
         if (err) {
             res.send("error!")
         } else {
