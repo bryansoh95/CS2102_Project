@@ -176,6 +176,23 @@ INSERT INTO Passed
 VALUES ($1, $2, $3, $4, $5)
 `
 
+const GET_BUDDY_PAIRS = `
+SELECT DISTINCT S1.username, S2.username
+FROM Students S1, Students S2 
+WHERE S1.username < S2.username 
+AND EXISTS (SELECT 1 FROM Passed WHERE suname = S1.username) 
+AND NOT EXISTS (
+	SELECT 1 FROM Passed P1 
+	WHERE suname = S1.username 
+	AND NOT EXISTS (SELECT 1 FROM Passed P2 WHERE suname = S2.username AND module_code = P1.module_code AND academic_year = P1.academic_year AND semester = P1.semester)
+) 
+AND NOT EXISTS (
+	SELECT 1 FROM Passed P2 
+	WHERE suname = S2.username 
+	AND NOT EXISTS (SELECT 1 FROM Passed P1 WHERE suname = S1.username AND module_code = P2.module_code AND academic_year = P2.academic_year AND semester = P2.semester)
+)
+`
+
 router.post('/course', (req, res, next) => {
     const data = {
         username: req.body.username
@@ -644,6 +661,16 @@ router.post('/course/passed/add', (req, res, next) => {
             } else {
                 res.send('prof does not teach course')
             }
+        }
+    })
+})
+
+router.get('/course/buddies', (req, res, next) => {
+    pool.query(GET_BUDDY_PAIRS, (err, dbRes) => {
+        if (err) {
+            res.send('error!')
+        } else {
+            res.send(dbRes.rows)
         }
     })
 })
