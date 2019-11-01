@@ -103,6 +103,19 @@ AND thread_title = $3
 AND LOWER(post_content) LIKE '%' || $4 || '%'
 `
 
+const GET_COURSE_HOT_FORUM_THREADS = `
+SELECT category, thread_title 
+FROM Posts
+WHERE module_code = $1
+GROUP BY category, thread_title
+HAVING COUNT(*) >= ALL (
+    SELECT COUNT(*)
+    FROM Posts
+    WHERE module_code = $1
+    GROUP BY category, thread_title
+)
+`
+
 router.post('/course/:module_code/forum/:category/thread', (req, res, next) => {
     const data = {
         module_code: req.body.module_code,
@@ -180,6 +193,19 @@ router.post('/course/:module_code/forum/:category/thread/new', (req, res, next) 
             res.send('error!')
         } else {
             res.send('insert success')
+        }
+    })
+})
+
+router.post('/course/:module_code/forum/hot', (req, res, next) => {
+    const data = {
+        module_code: req.body.module_code
+    }
+    pool.query(GET_COURSE_HOT_FORUM_THREADS, [data.module_code], (err, dbRes) => {
+        if (err) {
+            res.send('error!')
+        } else {
+            res.send(dbRes.rows)
         }
     })
 })
