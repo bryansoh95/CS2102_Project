@@ -24,7 +24,7 @@ class NavigationBar extends Component {
     return (
       <div>
         <Navbar style={{ background: "rgb(2, 122, 197)" }} light expand="md">
-          <NavbarBrand style={{ color: "white" }} href="/">
+          <NavbarBrand style={{ color: "white" }} href="/home">
             Luminus2.0
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
@@ -36,7 +36,7 @@ class NavigationBar extends Component {
             <NavItem>
               <NavLink
                 style={{ color: "white" }}
-                href="https://github.com/reactstrap/reactstrap"
+                href="https://github.com/bryansoh95/CS2102_Project"
               >
                 GitHub
               </NavLink>

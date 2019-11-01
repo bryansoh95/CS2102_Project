@@ -28,17 +28,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/home" component={Landing} />
+            <Route path="/modules/past" component={PastModules} />
             <Route
-              path="/home/modules/past/:username"
-              render={props => (
-                <PastModules
-                  {...props}
-                  username={props.match.params.username}
-                />
-              )}
-            />
-            <Route
-              path="/home/modules/:moduleCode/announcements"
+              path="/modules/:moduleCode/announcements"
               render={props => (
                 <Announcements
                   {...props}
@@ -47,13 +39,13 @@ class App extends Component {
               )}
             />
             <Route
-              path="/home/modules/:moduleCode/forum"
+              path="/modules/:moduleCode/forum"
               render={props => (
                 <Forum {...props} moduleCode={props.match.params.moduleCode} />
               )}
             />
             <Route
-              path="/home/modules/:moduleCode/gradebook/:username"
+              path="/modules/:moduleCode/gradebook/:username"
               render={props => (
                 <Gradebook
                   {...props}
@@ -63,7 +55,7 @@ class App extends Component {
               )}
             />
             <Route
-              path="/home/modules/:moduleCode"
+              path="/modules/:moduleCode"
               render={props => (
                 <Module {...props} moduleCode={props.match.params.moduleCode} />
               )}
