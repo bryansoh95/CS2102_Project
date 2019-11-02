@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout, validateLogin } from "../actions/authActions";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
+      username: "",
       password: ""
     };
   }
@@ -17,10 +19,16 @@ class Login extends Component {
   onSubmit = e => {
     e.preventDefault();
     const userData = {
-      email: this.state.email,
+      username: this.state.username,
       password: this.state.password
     };
-    this.props.validateUser(userData);
+    //this.props.logout();
+    this.props.validateLogin(userData);
+    setTimeout(() => {
+      this.props.user.isLoggedIn
+        ? this.props.history.push("/home")
+        : alert("Invalid");
+    }, 2000);
   };
 
   render() {
@@ -43,11 +51,11 @@ class Login extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.email}
-                  id="email"
+                  value={this.state.username}
+                  id="username"
                   type="email"
                 />
-                <label htmlFor="email">Email</label>
+                <label htmlFor="username">Username</label>
               </div>
               <div className="input-field col s12">
                 <input
@@ -80,4 +88,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(
+  mapStateToProps,
+  { validateLogin, logout }
+)(Login);

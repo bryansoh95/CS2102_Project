@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ModuleListingContainer from "../components/ModuleListingContainer";
 import AnnouncementListingContainer from "../components/AnnouncementListingContainer";
 import { Container, Row, Col, Button } from "reactstrap";
+import { connect } from "react-redux";
 
 class Landing extends Component {
   render() {
@@ -10,7 +11,7 @@ class Landing extends Component {
       <div>
         <Row className="pt-5">
           <Col sm={{ offset: 1 }}>
-            <h2>Welcome, yogaman</h2>
+            <h2>Welcome, {this.props.user.name}</h2>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
             <Button color="info">Request Module</Button>
@@ -32,4 +33,8 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(Landing);
