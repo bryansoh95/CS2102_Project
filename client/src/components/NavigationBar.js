@@ -1,23 +1,24 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
 } from "reactstrap";
 import { SSL_OP_TLS_ROLLBACK_BUG } from "constants";
+import { connect } from "react-redux";
+import { logout } from "../actions/authActions";
 
 class NavigationBar extends Component {
   constructor(props) {
     super(props);
+  }
+
+  doLogout = () => {
+    this.props.logout();
+    this.props.history.push("/");
   }
 
   render() {
@@ -29,11 +30,6 @@ class NavigationBar extends Component {
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink style={{ color: "white" }} href="/components/">
-                NavItem1
-              </NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink
                 style={{ color: "white" }}
                 href="https://github.com/bryansoh95/CS2102_Project"
@@ -41,17 +37,14 @@ class NavigationBar extends Component {
                 GitHub
               </NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle style={{ color: "white" }} nav caret>
+            <NavItem>
+              <NavLink
+                style={{ color: "white" }}
+                onClick={this.doLogout}
+              >
                 Logout
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+              </NavLink>
+            </NavItem>
           </Nav>
         </Navbar>
       </div>
@@ -59,4 +52,11 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default withRouter(connect(
+  mapStateToProps, 
+  { logout }
+)(NavigationBar));
