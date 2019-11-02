@@ -3,19 +3,32 @@ import { Link } from "react-router-dom";
 import {
   Card,
   Button,
-  CardTitle,
+  CardBody,
+  CardHeader,
   CardText,
   Row,
   Col,
   Container
 } from "reactstrap";
+import { connect } from "react-redux";
+import axios from "axios";
 
 class PastModules extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentModules: ["cs2102", "cs1101", "is1103", "cs2030", "is2102"]
+      studentModules: []
     };
+  }
+
+  componentDidMount() {
+    axios.post('/course/passed', {
+      suname: this.props.user.username
+    })
+      .then(res =>
+        this.setState({ studentModules: res.data })
+      )
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -25,21 +38,23 @@ class PastModules extends Component {
         <Row className="mr-5 ml-5 mt-3">
           {this.state.studentModules.map(module => (
             <Col sm="4">
-              <Card body>
-                <CardTitle>Module code</CardTitle>
-                <CardText>Module name</CardText>
-                <CardText>AY_Semester</CardText>
+              <Card>
+                <CardHeader style={{ fontSize: 24 }}>{module.module_code}</CardHeader>
+                <CardBody>
+                  <CardText style={{ fontSize: 18 }}>{module.name}</CardText>
+                  <CardText style={{ fontSize: 18 }}>{module.academic_year}, Semester: {module.semester}</CardText>
+                </CardBody>
               </Card>
             </Col>
           ))}
         </Row>
-      </div>
+      </div >
     );
   }
 }
 
-{
-  /* <div>Past modules page for: {this.props.username}</div>; */
-}
+const mapStateToProps = state => ({
+  user: state.user
+});
 
-export default PastModules;
+export default connect(mapStateToProps)(PastModules);

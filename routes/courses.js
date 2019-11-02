@@ -79,12 +79,14 @@ AND module_code = $2
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_STUDENT = `
 SELECT *
-FROM Announcements 
+FROM Announcements A, Users U
 WHERE module_code IN (
     SELECT module_code 
     FROM Enrolls
     WHERE suname = $1
 )
+AND A.puname = U.username
+ORDER BY A.timestamp DESC
 `;
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_PROF = `
@@ -100,7 +102,7 @@ WHERE module_code IN (
 const GET_CURRENT_COURSE_ANNOUNCEMENTS = `
 SELECT *
 FROM Announcements A, Users U
-WHERE module_code = $1
+WHERE module_code = $1 
 AND A.puname = U.username
 `;
 
