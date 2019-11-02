@@ -14,8 +14,11 @@ class Landing extends Component {
             <h2>Welcome, {this.props.user.name}</h2>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
-            <Button color="info">Request Module</Button>
+            <Button color="info">Request Module (if stud)</Button>
+            <var> </var>
+            <Button color="info">View Module Requests</Button>
           </Col>
+          <Col sm={{ size: 5, order: 2 }}></Col>
         </Row>
         <Row className="pt-3">
           <Col sm={{ size: 5, order: 2, offset: 1 }}>

@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import SideNav from "../components/SideNav";
+import { Row, Col } from "reactstrap";
 
 class Gradebook extends Component {
   render() {
     return (
       <div>
-        Gradebook page for mod: {this.props.moduleCode} for{" "}
-        {this.props.username}
+        <Row>
+          <Col xs="3">
+            <SideNav />
+          </Col>
+          <Col>
+            <h1 className="mt-5">moduleCode Gradebook</h1>
+          </Col>
+        </Row>
       </div>
     );
   }

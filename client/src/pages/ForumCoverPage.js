@@ -7,10 +7,10 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemText,
 } from "reactstrap";
 
-class Forum extends Component {
+class ForumCoverPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,20 +59,10 @@ class Forum extends Component {
                 </div>
               </div>
             </form>
-            <ListGroupItem>
-              <ListGroupItemHeading>
-                <Link to="/">Thread 1</Link>
-              </ListGroupItemHeading>
-              <ListGroupItemText>
-                Description Donec id elit non mi porta gravida at eget metus.
-                Maecenas sed diam eget risus varius blandit.
-              </ListGroupItemText>
-            </ListGroupItem>
-            <ListGroupItem></ListGroupItem>
             <ListGroup className="mr-5">
               <ListGroupItem>
                 <ListGroupItemHeading>
-                  <Link to="/">Thread 1</Link>
+                  <Link to="/">Lectures Questions</Link>
                 </ListGroupItemHeading>
                 <ListGroupItemText>
                   Description Donec id elit non mi porta gravida at eget metus.
@@ -81,7 +71,7 @@ class Forum extends Component {
               </ListGroupItem>
               <ListGroupItem>
                 <ListGroupItemHeading>
-                  <Link to="/">Thread 2</Link>
+                  <Link to="/">Tutorial Questions</Link>
                 </ListGroupItemHeading>
                 <ListGroupItemText>
                   Donec id elit non mi porta gravida at eget metus. Maecenas sed
@@ -90,7 +80,7 @@ class Forum extends Component {
               </ListGroupItem>
               <ListGroupItem>
                 <ListGroupItemHeading>
-                  <Link to="/">Thread 3</Link>
+                  <Link to="/">General Questions</Link>
                 </ListGroupItemHeading>
                 <ListGroupItemText>
                   Donec id elit non mi porta gravida at eget metus. Maecenas sed
@@ -105,4 +95,4 @@ class Forum extends Component {
   }
 }
 
-export default Forum;
+export default ForumCoverPage;

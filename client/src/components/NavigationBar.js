@@ -25,7 +25,7 @@ class NavigationBar extends Component {
       <div>
         <Navbar style={{ background: "rgb(2, 122, 197)" }} light expand="md">
           <NavbarBrand style={{ color: "white" }} href="/home">
-            Luminus2.0
+            LuminusAlpha
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem>

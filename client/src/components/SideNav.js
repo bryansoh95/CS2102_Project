@@ -13,6 +13,7 @@ class SideNav extends Component {
           width: "300px"
         }}
       >
+        <hr />
         <Nav vertical>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
@@ -25,12 +26,11 @@ class SideNav extends Component {
             </NavLink>
           </NavItem>
 
-          <NavItem className="mt-2 ml-5">
+          <NavItem className="mt-2 ml-5 mb-3">
             <NavLink style={{ fontSize: 24 }} href="#">
               Gradebook
             </NavLink>
           </NavItem>
-          <hr />
         </Nav>
         <hr />
       </div>

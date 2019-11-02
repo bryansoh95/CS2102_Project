@@ -12,7 +12,7 @@ class Announcements extends Component {
             <SideNav />
           </Col>
           <Col>
-            <h1 className="mt-5">Announcements</h1>
+            <h1 className="mt-5">moduleCode Announcements</h1>
           </Col>
         </Row>
       </div>
