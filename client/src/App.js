@@ -28,11 +28,11 @@ class App extends Component {
               <Route exact path="/home" component={Landing} />
               <Route path="/modules/past" component={PastModules} />
               <Route
-                path="/modules/:moduleCode/announcements"
+                path="/modules/:module_code/announcements"
                 render={props => (
                   <Announcements
                     {...props}
-                    moduleCode={props.match.params.moduleCode}
+                    module_code={props.match.params.module_code}
                   />
                 )}
               />

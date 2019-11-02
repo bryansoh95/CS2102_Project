@@ -17,7 +17,7 @@ class SideNav extends Component {
         <Nav vertical>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-              Announcements
+              <Link to="/">Announcements</Link>
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">

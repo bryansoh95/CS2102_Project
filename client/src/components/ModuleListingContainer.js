@@ -12,7 +12,7 @@ class ModuleListingContainer extends Component {
   }
   componentDidMount() {
     axios
-      .post("http://localhost:8080/course", {
+      .post("/course", {
         username: this.props.user.username
       })
       .then(res => {
@@ -24,9 +24,11 @@ class ModuleListingContainer extends Component {
     return (
       <ListGroup>
         {this.state.studentModules.map(module => (
-          <ListGroupItem action tag="button">
-            {module.module_code}, {module.name}
-          </ListGroupItem>
+          <Link to={"/modules/" + module.module_code + "/announcements"}>
+            <ListGroupItem action tag="button">
+              {module.module_code}, {module.name}
+            </ListGroupItem>
+          </Link>
         ))}
       </ListGroup>
     );
