@@ -59,7 +59,7 @@ class Forum extends Component {
                 </div>
               </div>
             </form>
-            <ListGroupItem>
+            <ListGroupItem className="mr-5">
               <ListGroupItemHeading>
                 <Link to="/">Thread 1</Link>
               </ListGroupItemHeading>
@@ -68,7 +68,7 @@ class Forum extends Component {
                 Maecenas sed diam eget risus varius blandit.
               </ListGroupItemText>
             </ListGroupItem>
-            <ListGroupItem></ListGroupItem>
+            <ListGroupItem className="mr-5"></ListGroupItem>
             <ListGroup className="mr-5">
               <ListGroupItem>
                 <ListGroupItemHeading>
