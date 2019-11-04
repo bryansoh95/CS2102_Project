@@ -8,7 +8,6 @@ import Announcements from "./pages/Announcements";
 import Forum from "./pages/Forum";
 import Threads from "./pages/Threads";
 import Login from "./pages/Login";
-import TEST from "./pages/TEST";
 import PastModules from "./pages/PastModules";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -58,7 +57,6 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/test" render={() => <TEST />} />
               <Route
                 path="/modules/:module_code/gradebook"
                 render={props => (
