@@ -9,13 +9,19 @@ import {
   ListGroupItemHeading,
   ListGroupItemText
 } from "reactstrap";
+import axios from "axios";
 
 class Forum extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      query: ""
-    };
+    this.state = { moduleForums: [] };
+  }
+
+  componentDidMount() {
+    axios
+      .post("/course/forum", { module_code: this.props.module_code })
+      .then(res => this.setState({ moduleForums: res.data }))
+      .catch(err => console.log(err));
   }
 
   handleChange = e => {
@@ -30,7 +36,6 @@ class Forum extends Component {
   //   this.props.searchListings(userQuery);
   //   this.props.history.push("/searchResults");
   // };
-
   render() {
     return (
       <div>
@@ -39,7 +44,7 @@ class Forum extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5 mb-3">moduleCode Forum</h1>
+            <h1 className="mt-5 mb-3">{this.props.module_code} Forum</h1>
             <form onSubmit={this.handleSubmit} className="ml-3">
               <div class="row">
                 <div class="col">
@@ -59,44 +64,14 @@ class Forum extends Component {
                 </div>
               </div>
             </form>
-            <ListGroupItem className="mr-5">
-              <ListGroupItemHeading>
-                <Link to="/">Thread 1</Link>
-              </ListGroupItemHeading>
-              <ListGroupItemText>
-                Description Donec id elit non mi porta gravida at eget metus.
-                Maecenas sed diam eget risus varius blandit.
-              </ListGroupItemText>
-            </ListGroupItem>
-            <ListGroupItem className="mr-5"></ListGroupItem>
-            <ListGroup className="mr-5">
-              <ListGroupItem>
-                <ListGroupItemHeading>
-                  <Link to="/">Thread 1</Link>
-                </ListGroupItemHeading>
-                <ListGroupItemText>
-                  Description Donec id elit non mi porta gravida at eget metus.
-                  Maecenas sed diam eget risus varius blandit.
-                </ListGroupItemText>
-              </ListGroupItem>
-              <ListGroupItem>
-                <ListGroupItemHeading>
-                  <Link to="/">Thread 2</Link>
-                </ListGroupItemHeading>
-                <ListGroupItemText>
-                  Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                  diam eget risus varius blandit.
-                </ListGroupItemText>
-              </ListGroupItem>
-              <ListGroupItem>
-                <ListGroupItemHeading>
-                  <Link to="/">Thread 3</Link>
-                </ListGroupItemHeading>
-                <ListGroupItemText>
-                  Donec id elit non mi porta gravida at eget metus. Maecenas sed
-                  diam eget risus varius blandit.
-                </ListGroupItemText>
-              </ListGroupItem>
+            <ListGroup>
+              {this.state.moduleForums.map(forum => (
+                <ListGroupItem action tag="button">
+                  <ListGroupItemHeading>
+                    <Link to="/">{forum.category}</Link>
+                  </ListGroupItemHeading>
+                </ListGroupItem>
+              ))}
             </ListGroup>
           </Col>
         </Row>
