@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
+import { connect } from "react-redux";
 
 class SideNav extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   render() {
     return (
@@ -20,18 +21,40 @@ class SideNav extends Component {
         <Nav vertical>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-              <Link to={"/modules/" + this.props.module_code + '/announcements'}>Announcements</Link>
+              <Link
+                to={"/modules/" + this.props.module_code + "/announcements"}
+              >
+                Announcements
+              </Link>
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-            <Link to={"/modules/" + this.props.module_code + '/forum'}>Forum</Link>
+              <Link to={"/modules/" + this.props.module_code + "/forum"}>
+                Forum
+              </Link>
             </NavLink>
           </NavItem>
-
-          <NavItem className="mt-2 ml-5 mb-3">
+          <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-            <Link to={"/modules/" + this.props.module_code + '/gradebook'}>Gradebook</Link>
+              <Link to={"/modules/" + this.props.module_code + "/gradebook"}>
+                Gradebook
+              </Link>
+            </NavLink>
+          </NavItem>
+          <NavItem
+            className="mt-2 ml-5 mb-3"
+            style={{
+              display:
+                this.props.user.username.substring(0, 1) === "A"
+                  ? "block"
+                  : "none"
+            }}
+          >
+            <NavLink style={{ fontSize: 24 }} href="#">
+              <Link to={"/modules/" + this.props.module_code + "/requests"}>
+                Module Requests
+              </Link>
             </NavLink>
           </NavItem>
         </Nav>
@@ -41,4 +64,8 @@ class SideNav extends Component {
   }
 }
 
-export default SideNav;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(SideNav);

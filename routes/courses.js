@@ -39,8 +39,10 @@ ORDER BY module_code ASC
 
 const PROF_GET_STUDENT_REQUESTS_FOR_COURSE = `
 SELECT * 
-FROM Requests
+FROM Requests R, Users U
 WHERE module_code = $1
+AND R.suname = U.username
+ORDER BY R.timestamp DESC
 `;
 
 const PROF_ADD_STUDENT_TO_COURSE = `
@@ -78,7 +80,7 @@ AND module_code = $2
 `;
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_STUDENT = `
-SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp, U.username, U.name
 FROM Announcements A, Users U
 WHERE module_code IN (
     SELECT module_code 
@@ -91,7 +93,7 @@ LIMIT 5
 `;
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_PROF = `
-SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp, U.username, U.name
 FROM Announcements A, Users U 
 WHERE module_code IN (
     SELECT module_code 
@@ -104,7 +106,7 @@ LIMIT 5
 `;
 
 const GET_CURRENT_COURSE_ANNOUNCEMENTS = `
-SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp, U.username, U.name
 FROM Announcements A, Users U
 WHERE module_code = $1 
 AND A.puname = U.username
@@ -419,7 +421,7 @@ router.post("/course/:module_code/announcements/delete", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/requests", (req, res, next) => {
+router.post("/course/requests", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
   };

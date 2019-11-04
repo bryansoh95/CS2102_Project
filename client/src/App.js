@@ -11,6 +11,7 @@ import PastModules from "./pages/PastModules";
 import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
+import ModuleRequests from "./pages/ModuleRequests";
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +50,15 @@ class App extends Component {
                 path="/modules/:module_code/gradebook"
                 render={props => (
                   <Gradebook
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/requests"
+                render={props => (
+                  <ModuleRequests
                     {...props}
                     module_code={props.match.params.module_code}
                   />

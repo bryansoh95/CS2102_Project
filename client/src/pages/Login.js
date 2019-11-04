@@ -28,7 +28,7 @@ class Login extends Component {
       this.props.user.isLoggedIn
         ? this.props.history.push("/home")
         : alert("Invalid");
-    }, 2000);
+    }, 1000);
   };
 
   render() {

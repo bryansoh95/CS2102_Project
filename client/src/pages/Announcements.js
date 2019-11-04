@@ -48,8 +48,7 @@ class Announcements extends Component {
                   </ListGroupItemHeading>
                   <ListGroupItemText>{announcement.content}</ListGroupItemText>
                   <ListGroupItemText>
-                    {announcement.timestamp.substring(0, 10)} |{" "}
-                    {announcement.name}
+                    {announcement.timestamp} | {announcement.name}
                   </ListGroupItemText>
                 </ListGroupItem>
               ))}
