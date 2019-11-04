@@ -21,7 +21,7 @@ AND category = $2
 `;
 
 const GET_ALL_THREADS_FOR_COURSE_CATEGORY = `
-SELECT * 
+SELECT t.module_code, t.category, t.thread_title, t.uname, u.name, TO_CHAR(t.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp 
 FROM Threads t JOIN Users u ON t.uname = u.username
 WHERE module_code = $1
 AND category = $2
@@ -68,11 +68,13 @@ VALUES ($1, $2, $3, $4, $5, NOW(), $6)
 `;
 
 const GET_ALL_POSTS_FOR_THREAD = `
-SELECT * 
-FROM Posts
+SELECT P.module_code, P.category, P.thread_title, P.post_content, P.post_id, P.uname, U.name, TO_CHAR(P.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp
+FROM Posts P, Users U
 WHERE module_code = $1
 AND category = $2
 AND thread_title = $3
+AND P.uname = U.username
+ORDER BY timestamp ASC
 `;
 
 const AMEND_POST_ENTRY = `
@@ -138,7 +140,7 @@ router.post("/course/forum", (req, res, next) => {
     }
   );
 });
-router.post("/course/forum/:category/thread", (req, res, next) => {
+router.post("/course/forum/thread", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     category: req.body.category
@@ -156,7 +158,7 @@ router.post("/course/forum/:category/thread", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/forum/add", (req, res, next) => {
+router.post("/course/forum/add", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     category: req.body.category,
@@ -189,7 +191,7 @@ router.post("/course/:module_code/forum/add", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/forum/delete", (req, res, next) => {
+router.post("/course/forum/delete", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     category: req.body.category,
@@ -224,7 +226,7 @@ router.post("/course/:module_code/forum/delete", (req, res, next) => {
 });
 
 router.post(
-  "/course/:module_code/forum/:category/thread/new",
+  "/course/forum/thread/new",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -246,7 +248,7 @@ router.post(
   }
 );
 
-router.post("/course/:module_code/forum/hot", (req, res, next) => {
+router.post("/course/forum/hot", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
   };
@@ -260,7 +262,7 @@ router.post("/course/:module_code/forum/hot", (req, res, next) => {
 });
 
 router.post(
-  "/course/:module_code/forum/:category/thread/edit",
+  "/course/forum/thread/edit",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -290,7 +292,7 @@ router.post(
 );
 
 router.post(
-  "/course/:module_code/forum/:category/thread/delete",
+  "/course/forum/thread/delete",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -313,37 +315,7 @@ router.post(
 );
 
 router.post(
-  "/course/:module_code/forum/:category/thread/edit",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      new_thread_title: req.body.new_thread_title,
-      old_thread_title: req.body.old_thread_title,
-      uname: req.body.uname
-    };
-    pool.query(
-      AMEND_THREAD_ENTRY,
-      [
-        data.new_thread_title,
-        data.module_code,
-        data.category,
-        data.old_thread_title,
-        data.uname
-      ],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("edit thread title success");
-        }
-      }
-    );
-  }
-);
-
-router.post(
-  "/course/:module_code/forum/:category/thread/:thread_title/post",
+  "/course/forum/thread/posts",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -365,7 +337,7 @@ router.post(
 );
 
 router.post(
-  "/course/:module_code/forum/:category/thread/:thread_title/posts/new",
+  "/course/forum/thread/posts/new",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -407,7 +379,7 @@ router.post(
 );
 
 router.post(
-  "/course/:module_code/forum/:category/thread/:thread_title/posts/:post_id",
+  "/course/forum/thread/posts/edit",
   (req, res, next) => {
     const data = {
       post_content: req.body.post_content,
@@ -439,7 +411,7 @@ router.post(
 );
 
 router.post(
-  "/course/:module_code/forum/:category/thread/:thread_title/posts/delete",
+  "/course/forum/thread/posts/delete",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,
@@ -468,7 +440,7 @@ router.post(
   }
 );
 
-router.post("/course/:module_code/forum/:category/search", (req, res, next) => {
+router.post("/course/forum/search", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     category: req.body.category,
@@ -488,7 +460,7 @@ router.post("/course/:module_code/forum/:category/search", (req, res, next) => {
 });
 
 router.post(
-  "/course/:module_code/forum/:category/thread/:thread_title/search",
+  "/cours/forum/thread/search",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,

@@ -38,7 +38,7 @@ ORDER BY module_code ASC
 `;
 
 const PROF_GET_STUDENT_REQUESTS_FOR_COURSE = `
-SELECT * 
+SELECT R.suname, R.module_code, U.name, TO_CHAR(R.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp  
 FROM Requests R, Users U
 WHERE module_code = $1
 AND R.suname = U.username
@@ -341,7 +341,7 @@ router.post("/course/announcements", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/announcements/new", (req, res, next) => {
+router.post("/course/announcements/new", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -375,7 +375,7 @@ router.post("/course/:module_code/announcements/new", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/announcements/edit", (req, res, next) => {
+router.post("/course/announcements/edit", (req, res, next) => {
   const data = {
     new_title: req.body.new_title,
     new_content: req.body.new_content,
@@ -402,7 +402,7 @@ router.post("/course/:module_code/announcements/edit", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/announcements/delete", (req, res, next) => {
+router.post("/course/announcements/delete", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -438,7 +438,7 @@ router.post("/course/requests", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/tutor", (req, res, next) => {
+router.post("/course/tutors", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
   };
@@ -451,7 +451,7 @@ router.post("/course/:module_code/tutor", (req, res, next) => {
   });
 });
 
-router.post("/course/:module_code/tutor/add", (req, res, next) => {
+router.post("/course/tutors/add", (req, res, next) => {
   const data = {
     suname: req.body.suname,
     module_code: req.body.module_code,
@@ -485,7 +485,7 @@ router.post("/course/:module_code/tutor/add", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/tutor/delete", (req, res, next) => {
+router.post("/course/tutors/delete", (req, res, next) => {
   const data = {
     suname: req.body.suname,
     module_code: req.body.module_code
@@ -521,7 +521,7 @@ router.post("/course/all/request", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/assessment", (req, res, next) => {
+router.post("/course/assessment", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
   };
@@ -534,7 +534,7 @@ router.post("/course/:module_code/assessment", (req, res, next) => {
   });
 });
 
-router.post("/course/:module_code/assessment/add", (req, res, next) => {
+router.post("/course/assessment/add", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -568,7 +568,7 @@ router.post("/course/:module_code/assessment/add", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/assessment/delete", (req, res, next) => {
+router.post("/course/assessment/delete", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -601,7 +601,7 @@ router.post("/course/:module_code/assessment/delete", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/assessment/edit", (req, res, next) => {
+router.post("/course/assessment/edit", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     old_title: req.body.old_title,
@@ -655,7 +655,7 @@ router.post("/course/gradebook", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/gradebook/add", (req, res, next) => {
+router.post("/course/gradebook/add", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -690,7 +690,7 @@ router.post("/course/:module_code/gradebook/add", (req, res, next) => {
   );
 });
 
-router.delete("/course/:module_code/gradebook/delete", (req, res, next) => {
+router.delete("/course/gradebook/delete", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -724,7 +724,7 @@ router.delete("/course/:module_code/gradebook/delete", (req, res, next) => {
   );
 });
 
-router.put("/course/:module_code/gradebook/edit", (req, res, next) => {
+router.put("/course/gradebook/edit", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,

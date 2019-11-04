@@ -13,7 +13,7 @@ class PostsListing extends Component {
   }
   componentDidMount() {
     axios
-      .post('/course/abc/forum/abc/thread/abc/post', {
+      .post('/course/forum/thread/posts', {
         module_code: 'CS2040',
         category: 'General',
         thread_title: 'Hello everyone'
