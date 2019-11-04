@@ -11,16 +11,22 @@ import {
 } from "reactstrap";
 import axios from "axios";
 
-class Forum extends Component {
+class Threads extends Component {
   constructor(props) {
+    console.log("HELLOOO");
     super(props);
-    this.state = { moduleForums: [] };
+    this.state = { moduleForumThreads: [] };
   }
 
   componentDidMount() {
+    console.log("HELLOOOO");
     axios
-      .post("/course/forum", { module_code: this.props.module_code })
-      .then(res => this.setState({ moduleForums: res.data }))
+      .post("/course/forum/threads", {
+        module_code: this.props.module_code,
+        category: this.props.category
+      })
+      .then(res => console.log("HELLO"))
+      //   .then(res => this.setState({ moduleForumThreads: res.data }))
       .catch(err => console.log(err));
   }
 
@@ -65,18 +71,15 @@ class Forum extends Component {
               </div>
             </form>
             <ListGroup>
-              {this.state.moduleForums.map(forum => (
-                <Link
-                  to={
-                    "/modules/" + forum.module_code + "/forum/" + forum.category
-                  }
-                >
-                  <ListGroupItem action tag="button">
-                    <ListGroupItemHeading>
-                      {forum.category}
-                    </ListGroupItemHeading>
-                  </ListGroupItem>
-                </Link>
+              {this.state.moduleForumThreads.map(thread => (
+                <ListGroupItem action tag="button">
+                  <ListGroupItemHeading>
+                    <Link to="/">{thread.category}</Link>
+                  </ListGroupItemHeading>
+                  <ListGroupItemText>
+                    {thread.timestamp.substring(0, 10)} | {thread.name}
+                  </ListGroupItemText>
+                </ListGroupItem>
               ))}
             </ListGroup>
           </Col>
@@ -86,4 +89,4 @@ class Forum extends Component {
   }
 }
 
-export default Forum;
+export default Threads;
