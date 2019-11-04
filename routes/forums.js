@@ -20,9 +20,9 @@ WHERE module_code = $1
 AND category = $2
 `;
 
-const GET_ALL_THREADS_FOR_COURSE = `
+const GET_ALL_THREADS_FOR_COURSE_CATEGORY = `
 SELECT * 
-FROM Threads
+FROM Threads t JOIN Users u ON t.uname = u.username
 WHERE module_code = $1
 AND category = $2
 `;
@@ -144,7 +144,7 @@ router.post("/course/forum/:category/thread", (req, res, next) => {
     category: req.body.category
   };
   pool.query(
-    GET_ALL_THREADS_FOR_COURSE,
+    GET_ALL_THREADS_FOR_COURSE_CATEGORY,
     [data.module_code, data.category],
     (err, dbRes) => {
       if (err) {
