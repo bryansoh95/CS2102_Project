@@ -1,11 +1,25 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ModuleListingContainer from "../components/ModuleListingContainer";
-import HomePageAnnouncements from "../components/HomePageAnnouncements";
+import AnnouncementListingContainer from "../components/AnnouncementListingContainer";
+import CollapseForm from "../components/CollapseForm";
 import { Container, Row, Col, Button } from "reactstrap";
 import { connect } from "react-redux";
 
 class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showComponent: false,
+    };
+    this._onButtonClick = this._onButtonClick.bind(this);
+  }
+
+  _onButtonClick() {
+    this.setState({
+      showComponent: true,
+    });
+  }
   render() {
     return (
       <div>
@@ -14,7 +28,11 @@ class Landing extends Component {
             <h2>Welcome, {this.props.user.name}</h2>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
-            <Button color="info">Request Module (if stud)</Button>
+            <Button color="info" onClick={this._onButtonClick}>Request Module (if stud)</Button>
+            {this.state.showComponent ?
+              <CollapseForm /> :
+              null
+            }
             <var> </var>
             <Button color="info">View Module Requests</Button>
           </Col>
@@ -28,7 +46,7 @@ class Landing extends Component {
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
             <h2>Announcements</h2>
-            <HomePageAnnouncements />
+            <AnnouncementListingContainer />
           </Col>
         </Row>
       </div>
