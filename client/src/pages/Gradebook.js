@@ -9,7 +9,7 @@ class Gradebook extends Component {
       <div>
         <Row>
           <Col xs="3">
-            <SideNav />
+            <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
             <h1 className="mt-5">moduleCode Gradebook</h1>

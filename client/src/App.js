@@ -37,21 +37,20 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/modules/:moduleCode/forum"
+                path="/modules/:module_code/forum"
                 render={props => (
                   <Forum
                     {...props}
-                    moduleCode={props.match.params.moduleCode}
+                    module_code={props.match.params.module_code}
                   />
                 )}
               />
               <Route
-                path="/modules/:moduleCode/gradebook/:username"
+                path="/modules/:module_code/gradebook"
                 render={props => (
                   <Gradebook
                     {...props}
-                    moduleCode={props.match.params.moduleCode}
-                    username={props.match.params.username}
+                    module_code={props.match.params.module_code}
                   />
                 )}
               />

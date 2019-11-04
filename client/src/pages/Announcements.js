@@ -35,10 +35,10 @@ class Announcements extends Component {
       <div>
         <Row>
           <Col xs="3">
-            <SideNav />
+            <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5">{this.props.moduleCode} Announcements</h1>
+            <h1 className="mt-5">{this.props.module_code} Announcements</h1>
             <ListGroup>
               {this.state.moduleAnnouncements.map(announcement => (
                 <ListGroupItem action tag="button">

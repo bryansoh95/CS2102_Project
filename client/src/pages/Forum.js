@@ -36,7 +36,7 @@ class Forum extends Component {
       <div>
         <Row>
           <Col xs="3">
-            <SideNav />
+            <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
             <h1 className="mt-5 mb-3">moduleCode Forum</h1>

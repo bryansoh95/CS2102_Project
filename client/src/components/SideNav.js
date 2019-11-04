@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
 class SideNav extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <div
@@ -17,18 +20,18 @@ class SideNav extends Component {
         <Nav vertical>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-              <Link to="/">Announcements</Link>
+              <Link to={"/modules/" + this.props.module_code + '/announcements'}>Announcements</Link>
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">
             <NavLink style={{ fontSize: 24 }} href="#">
-              Forum
+            <Link to={"/modules/" + this.props.module_code + '/forum'}>Forum</Link>
             </NavLink>
           </NavItem>
 
           <NavItem className="mt-2 ml-5 mb-3">
             <NavLink style={{ fontSize: 24 }} href="#">
-              Gradebook
+            <Link to={"/modules/" + this.props.module_code + '/gradebook'}>Gradebook</Link>
             </NavLink>
           </NavItem>
         </Nav>
