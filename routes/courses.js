@@ -78,7 +78,7 @@ AND module_code = $2
 `;
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_STUDENT = `
-SELECT *
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
 FROM Announcements A, Users U
 WHERE module_code IN (
     SELECT module_code 
@@ -87,20 +87,24 @@ WHERE module_code IN (
 )
 AND A.puname = U.username
 ORDER BY A.timestamp DESC
+LIMIT 5
 `;
 
 const GET_ALL_COURSE_ANNOUNCEMENTS_FOR_PROF = `
-SELECT *
-FROM Announcements 
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
+FROM Announcements A, Users U 
 WHERE module_code IN (
     SELECT module_code 
     FROM Teaches
     WHERE puname = $1
 )
+AND A.puname = U.username
+ORDER BY A.timestamp DESC
+LIMIT 5
 `;
 
 const GET_CURRENT_COURSE_ANNOUNCEMENTS = `
-SELECT *
+SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-yyyy hh12:mi:ss am') AS timestamp, U.username, U.name
 FROM Announcements A, Users U
 WHERE module_code = $1 
 AND A.puname = U.username
