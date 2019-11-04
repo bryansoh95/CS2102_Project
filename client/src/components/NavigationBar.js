@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 import { SSL_OP_TLS_ROLLBACK_BUG } from "constants";
 import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
@@ -19,12 +13,13 @@ class NavigationBar extends Component {
   doLogout = () => {
     this.props.logout();
     this.props.history.push("/");
-  }
+  };
 
   render() {
     return (
       <div>
         <Navbar style={{ background: "rgb(2, 122, 197)" }} light expand="md">
+          <i className="material-icons">bubble_chart</i>
           <NavbarBrand style={{ color: "white" }} href="/home">
             LuminusAlpha
           </NavbarBrand>
@@ -38,10 +33,7 @@ class NavigationBar extends Component {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink
-                style={{ color: "white" }}
-                onClick={this.doLogout}
-              >
+              <NavLink style={{ color: "white" }} onClick={this.doLogout}>
                 Logout
               </NavLink>
             </NavItem>
@@ -56,7 +48,9 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default withRouter(connect(
-  mapStateToProps, 
-  { logout }
-)(NavigationBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logout }
+  )(NavigationBar)
+);

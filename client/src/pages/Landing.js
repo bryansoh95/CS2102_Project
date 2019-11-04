@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ModuleListingContainer from "../components/ModuleListingContainer";
-import AnnouncementListingContainer from "../components/AnnouncementListingContainer";
+import HomePageAnnouncements from "../components/HomePageAnnouncements";
 import { Container, Row, Col, Button } from "reactstrap";
 import { connect } from "react-redux";
 
@@ -28,7 +28,7 @@ class Landing extends Component {
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
             <h2>Announcements</h2>
-            <AnnouncementListingContainer />
+            <HomePageAnnouncements />
           </Col>
         </Row>
       </div>

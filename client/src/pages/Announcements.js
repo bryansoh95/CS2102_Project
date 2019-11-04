@@ -41,9 +41,10 @@ class Announcements extends Component {
             <h1 className="mt-5">{this.props.module_code} Announcements</h1>
             <ListGroup>
               {this.state.moduleAnnouncements.map(announcement => (
-                <ListGroupItem action tag="button">
+                <ListGroupItem>
                   <ListGroupItemHeading>
-                    <Link to="/">{announcement.title}</Link>
+                    {announcement.title}
+                    <hr />
                   </ListGroupItemHeading>
                   <ListGroupItemText>{announcement.content}</ListGroupItemText>
                   <ListGroupItemText>

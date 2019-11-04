@@ -54,15 +54,6 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                path="/modules/:moduleCode"
-                render={props => (
-                  <Module
-                    {...props}
-                    moduleCode={props.match.params.moduleCode}
-                  />
-                )}
-              />
             </Switch>
           </div>
         </Router>
