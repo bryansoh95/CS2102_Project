@@ -150,7 +150,7 @@ AND title = $4
 
 const GET_STUDENT_COURSE_SCORES = `
 SELECT * 
-FROM Scores
+FROM Scores S NATURAL JOIN Assessment A 
 WHERE module_code = $1
 AND suname = $2
 `;
@@ -631,7 +631,7 @@ router.post("/course/:module_code/assessment/edit", (req, res, next) => {
   );
 });
 
-router.post("/course/:module_code/gradebook", (req, res, next) => {
+router.post("/course/gradebook", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     suname: req.body.suname
