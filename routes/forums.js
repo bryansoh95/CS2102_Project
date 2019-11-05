@@ -460,8 +460,7 @@ router.post(
           res.send(dbRes.rows);
         }
       }
-    }
-  );
-});
+    );
+  });
 
 module.exports = router;
