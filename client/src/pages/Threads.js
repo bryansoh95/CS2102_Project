@@ -13,20 +13,17 @@ import axios from "axios";
 
 class Threads extends Component {
   constructor(props) {
-    console.log("HELLOOO");
     super(props);
     this.state = { moduleForumThreads: [] };
   }
 
   componentDidMount() {
-    console.log("HELLOOOO");
     axios
       .post("/course/forum/threads", {
         module_code: this.props.module_code,
         category: this.props.category
       })
-      .then(res => console.log("HELLO"))
-      //   .then(res => this.setState({ moduleForumThreads: res.data }))
+      .then(res => this.setState({ moduleForumThreads: res.data }))
       .catch(err => console.log(err));
   }
 
@@ -34,14 +31,14 @@ class Threads extends Component {
     this.setState({ query: e.target.value });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   const userQuery = {
-  //     query: this.state.query
-  //   };
-  //   this.props.searchListings(userQuery);
-  //   this.props.history.push("/searchResults");
-  // };
+  handleSubmit = e => {
+    e.preventDefault();
+    const userQuery = {
+      query: this.state.query
+    };
+    this.props.searchListings(userQuery);
+    this.props.history.push("/searchResults");
+  };
   render() {
     return (
       <div>
@@ -74,10 +71,21 @@ class Threads extends Component {
               {this.state.moduleForumThreads.map(thread => (
                 <ListGroupItem action tag="button">
                   <ListGroupItemHeading>
-                    <Link to="/">{thread.category}</Link>
+                    <Link
+                      to={
+                        "/modules/" +
+                        thread.module_code +
+                        "/forum/" +
+                        thread.category +
+                        "/" +
+                        thread.thread_title
+                      }
+                    >
+                      {thread.thread_title}
+                    </Link>
                   </ListGroupItemHeading>
                   <ListGroupItemText>
-                    {thread.timestamp.substring(0, 10)} | {thread.name}
+                    {thread.timestamp} | {thread.name}
                   </ListGroupItemText>
                 </ListGroupItem>
               ))}

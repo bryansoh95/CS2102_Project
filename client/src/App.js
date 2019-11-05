@@ -8,6 +8,7 @@ import Tutors from "./pages/Tutors";
 import Announcements from "./pages/Announcements";
 import Forum from "./pages/Forum";
 import Threads from "./pages/Threads";
+import Posts from "./pages/Posts";
 import Login from "./pages/Login";
 import PastModules from "./pages/PastModules";
 import { Provider } from "react-redux";
@@ -32,7 +33,8 @@ class App extends Component {
               <Route exact path="/home" component={Landing} />
               <Route path="/modules/past" component={PastModules} />
               <Route
-                exact path="/modules/:module_code/announcements"
+                exact
+                path="/modules/:module_code/announcements"
                 render={props => (
                   <Announcements
                     {...props}
@@ -50,7 +52,8 @@ class App extends Component {
                 )}
               />
               <Route
-                exact path="/modules/:module_code/forum"
+                exact
+                path="/modules/:module_code/forum"
                 render={props => (
                   <Forum
                     {...props}
@@ -59,6 +62,7 @@ class App extends Component {
                 )}
               />
               <Route
+                exact
                 path="/modules/:module_code/forum/:category"
                 render={props => (
                   <Threads
@@ -69,7 +73,19 @@ class App extends Component {
                 )}
               />
               <Route
-                exact path="/modules/:module_code/gradebook"
+                path="/modules/:module_code/forum/:category/:thread"
+                render={props => (
+                  <Posts
+                    {...props}
+                    module_code={props.match.params.module_code}
+                    category={props.match.params.category}
+                    thread_title={props.match.params.thread}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/modules/:module_code/gradebook"
                 render={props => (
                   <Gradebook
                     {...props}

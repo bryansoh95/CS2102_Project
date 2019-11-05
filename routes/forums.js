@@ -142,7 +142,7 @@ router.post("/course/forum", (req, res, next) => {
     }
   );
 });
-router.post("/course/forum/thread", (req, res, next) => {
+router.post("/course/forum/threads", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     category: req.body.category
@@ -226,28 +226,25 @@ router.post("/course/forum/delete", (req, res, next) => {
   );
 });
 
-router.post(
-  "/course/forum/thread/new",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title,
-      uname: req.body.uname
-    };
-    pool.query(
-      NEW_THREAD_ENTRY,
-      [data.module_code, data.category, data.thread_title, data.uname],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("insert success");
-        }
+router.post("/course/forum/thread/new", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title,
+    uname: req.body.uname
+  };
+  pool.query(
+    NEW_THREAD_ENTRY,
+    [data.module_code, data.category, data.thread_title, data.uname],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("insert success");
       }
-    );
-  }
-);
+    }
+  );
+});
 
 router.post("/course/forum/hot", (req, res, next) => {
   const data = {
@@ -262,184 +259,166 @@ router.post("/course/forum/hot", (req, res, next) => {
   });
 });
 
-router.post(
-  "/course/forum/thread/edit",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      new_thread_title: req.body.new_thread_title,
-      old_thread_title: req.body.old_thread_title,
-      uname: req.body.uname
-    };
-    pool.query(
-      AMEND_THREAD_ENTRY,
-      [
-        data.new_thread_title,
-        data.module_code,
-        data.category,
-        data.old_thread_title,
-        data.uname
-      ],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("edit thread title success");
-        }
+router.post("/course/forum/thread/edit", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    new_thread_title: req.body.new_thread_title,
+    old_thread_title: req.body.old_thread_title,
+    uname: req.body.uname
+  };
+  pool.query(
+    AMEND_THREAD_ENTRY,
+    [
+      data.new_thread_title,
+      data.module_code,
+      data.category,
+      data.old_thread_title,
+      data.uname
+    ],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("edit thread title success");
       }
-    );
-  }
-);
+    }
+  );
+});
 
-router.post(
-  "/course/forum/thread/delete",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title,
-      uname: req.body.uname
-    };
-    pool.query(
-      DELETE_THREAD,
-      [data.module_code, data.category, data.thread_title, data.uname],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("delete thread success");
-        }
+router.post("/course/forum/thread/delete", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title,
+    uname: req.body.uname
+  };
+  pool.query(
+    DELETE_THREAD,
+    [data.module_code, data.category, data.thread_title, data.uname],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("delete thread success");
       }
-    );
-  }
-);
+    }
+  );
+});
 
-router.post(
-  "/course/forum/thread/posts",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title
-    };
-    pool.query(
-      GET_ALL_POSTS_FOR_THREAD,
-      [data.module_code, data.category, data.thread_title],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send(dbRes.rows);
-        }
+router.post("/course/forum/thread/posts", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title
+  };
+  pool.query(
+    GET_ALL_POSTS_FOR_THREAD,
+    [data.module_code, data.category, data.thread_title],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
       }
-    );
-  }
-);
+    }
+  );
+});
 
-router.post(
-  "/course/forum/thread/posts/new",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title,
-      post_content: req.body.post_content,
-      uname: req.body.uname
-    };
-    pool.query(
-      GET_NEXT_POST_ID,
-      [data.module_code, data.category, data.thread_title],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          const post_id = dbRes.rows[0].max + 1;
-          pool.query(
-            NEW_POST_ENTRY,
-            [
-              data.module_code,
-              data.category,
-              data.thread_title,
-              data.post_content,
-              post_id,
-              data.uname
-            ],
-            (err, dbRes) => {
-              if (err) {
-                res.send("error!");
-              } else {
-                res.send("new post entry success");
-              }
+router.post("/course/forum/thread/posts/new", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title,
+    post_content: req.body.post_content,
+    uname: req.body.uname
+  };
+  pool.query(
+    GET_NEXT_POST_ID,
+    [data.module_code, data.category, data.thread_title],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        const post_id = dbRes.rows[0].max + 1;
+        pool.query(
+          NEW_POST_ENTRY,
+          [
+            data.module_code,
+            data.category,
+            data.thread_title,
+            data.post_content,
+            post_id,
+            data.uname
+          ],
+          (err, dbRes) => {
+            if (err) {
+              res.send("error!");
+            } else {
+              res.send("new post entry success");
             }
-          );
-        }
+          }
+        );
       }
-    );
-  }
-);
+    }
+  );
+});
 
-router.post(
-  "/course/forum/thread/posts/edit",
-  (req, res, next) => {
-    const data = {
-      post_content: req.body.post_content,
-      uname: req.body.uname,
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title,
-      post_id: req.body.post_id
-    };
-    pool.query(
-      AMEND_POST_ENTRY,
-      [
-        data.post_content,
-        data.uname,
-        data.module_code,
-        data.category,
-        data.thread_title,
-        data.post_id
-      ],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("update success");
-        }
+router.post("/course/forum/thread/posts/edit", (req, res, next) => {
+  const data = {
+    post_content: req.body.post_content,
+    uname: req.body.uname,
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title,
+    post_id: req.body.post_id
+  };
+  pool.query(
+    AMEND_POST_ENTRY,
+    [
+      data.post_content,
+      data.uname,
+      data.module_code,
+      data.category,
+      data.thread_title,
+      data.post_id
+    ],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("update success");
       }
-    );
-  }
-);
+    }
+  );
+});
 
-router.post(
-  "/course/forum/thread/posts/delete",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      thread_title: req.body.thread_title,
-      post_id: req.body.post_id,
-      uname: req.body.uname
-    };
-    pool.query(
-      DELETE_POST_ENTRY,
-      [
-        data.module_code,
-        data.category,
-        data.thread_title,
-        data.post_id,
-        data.uname
-      ],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send("delete post success");
-        }
+router.post("/course/forum/thread/posts/delete", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title,
+    post_id: req.body.post_id,
+    uname: req.body.uname
+  };
+  pool.query(
+    DELETE_POST_ENTRY,
+    [
+      data.module_code,
+      data.category,
+      data.thread_title,
+      data.post_id,
+      data.uname
+    ],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("delete post success");
       }
-    );
-  }
-);
+    }
+  );
+});
 
 router.post("/course/forum/search", (req, res, next) => {
   const data = {
@@ -481,8 +460,8 @@ router.post(
           res.send(dbRes.rows);
         }
       }
-    );
-  }
-);
+    }
+  );
+});
 
 module.exports = router;
