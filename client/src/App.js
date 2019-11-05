@@ -4,6 +4,7 @@ import Navbar from "./components/NavigationBar";
 import Landing from "./pages/Landing";
 import Module from "./pages/Module";
 import Gradebook from "./pages/Gradebook";
+import Tutors from "./pages/Tutors";
 import Announcements from "./pages/Announcements";
 import Forum from "./pages/Forum";
 import Threads from "./pages/Threads";
@@ -61,6 +62,15 @@ class App extends Component {
                 path="/modules/:module_code/gradebook"
                 render={props => (
                   <Gradebook
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/tutors"
+                render={props => (
+                  <Tutors
                     {...props}
                     module_code={props.match.params.module_code}
                   />

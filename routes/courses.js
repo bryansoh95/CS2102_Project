@@ -64,7 +64,7 @@ VALUES ($1, $2, NOW())
 
 const GET_ALL_TUTORS_FOR_COURSE = `
 SELECT * 
-FROM Tutors
+FROM Tutors T JOIN Users U ON T.suname = U.username
 WHERE module_code = $1
 `;
 

@@ -42,6 +42,13 @@ class SideNav extends Component {
               </Link>
             </NavLink>
           </NavItem>
+          <NavItem className="mt-2 ml-5">
+            <NavLink style={{ fontSize: 24 }} href="#">
+              <Link to={"/modules/" + this.props.module_code + "/tutors"}>
+                Tutors
+              </Link>
+            </NavLink>
+          </NavItem>
           <NavItem
             className="mt-2 ml-5 mb-3"
             style={{
