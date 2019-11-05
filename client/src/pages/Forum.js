@@ -30,10 +30,10 @@ class Forum extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const userQuery = {
+    this.props.history.push({pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
+      module_code: this.props.module_code,
       query: this.state.query
-    };
-    this.props.history.push("/modules/" + this.props.module_code + '/forum/search');
+    }});
   };
   render() {
     return (

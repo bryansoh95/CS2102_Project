@@ -97,18 +97,20 @@ AND uname = $5
 `;
 
 const SEARCH_FOR_FORUM_POSTS = `
-SELECT * FROM Posts
+SELECT P.module_code, P.category, P.thread_title, P.post_content, P.post_id, P.uname, U.name, TO_CHAR(P.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp
+FROM Posts P, Users U
 WHERE module_code = $1
-AND category = $2
-AND LOWER(post_content) LIKE '%' || $3 || '%'
+AND P.uname = U.username
+AND LOWER(post_content) LIKE '%' || $2 || '%'
 `;
 
 const SEARCH_FOR_THREAD_POSTS = `
-SELECT * FROM Posts
+SELECTP.module_code, P.category, P.thread_title, P.post_content, P.post_id, P.uname, U.name, TO_CHAR(P.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp
+FROM Posts P, Users U
 WHERE module_code = $1
 AND category = $2
-AND thread_title = $3
-AND LOWER(post_content) LIKE '%' || $4 || '%'
+AND P.uname = U.username
+AND LOWER(post_content) LIKE '%' || $3 || '%'
 `;
 
 const GET_COURSE_HOT_FORUM_THREADS = `
@@ -210,7 +212,6 @@ router.post("/course/forum/delete", (req, res, next) => {
             [data.module_code, data.category],
             (err, dbRes) => {
               if (err) {
-                console.log(err);
                 res.send("error!");
               } else {
                 res.send("delete new forum success");
@@ -447,7 +448,7 @@ router.post("/course/forum/search", (req, res, next) => {
   };
   pool.query(
     SEARCH_FOR_FORUM_POSTS,
-    [data.module_code, data.category, data.search_input.toLowerCase()],
+    [data.module_code, data.search_input.toLowerCase()],
     (err, dbRes) => {
       if (err) {
         res.send("error!");
@@ -471,7 +472,6 @@ router.post(
       [
         data.module_code,
         data.category,
-        data.thread_title,
         data.search_input.toLowerCase()
       ],
       (err, dbRes) => {

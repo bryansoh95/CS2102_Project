@@ -18,7 +18,7 @@ class NavigationBar extends Component {
   render() {
     return (
       <div>
-        <Navbar style={{ background: "rgb(2, 122, 197)" }} light expand="md">
+        <Navbar fixed='top' style={{ background: "rgb(2, 122, 197)" }} light expand="md">
           <i className="material-icons">bubble_chart</i>
           <NavbarBrand style={{ color: "white" }} href="/home">
             LuminusAlpha

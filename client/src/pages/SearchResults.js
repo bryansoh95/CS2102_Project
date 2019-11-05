@@ -21,14 +21,12 @@ class SearchResults extends Component {
     axios
       .post("/course/forum/search", {
         module_code: this.props.module_code,
-        search_input: this.props.search_input
+        search_input: this.props.location.data.query
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ postsResult: res.data });
       })
       .catch(err => console.log(err));
-      console.log(this.state.postsResult);
   }
 
   render() {
@@ -39,7 +37,23 @@ class SearchResults extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            hello
+            <h1 className="mt-5 mb-5">{this.props.module_code} Forum Search Results</h1>
+            <ListGroup className='mr-5'>
+                {this.state.postsResult.map(post => (
+                <ListGroupItem>
+                    <Link to={"/modules/" + this.props.module_code + "/forum/" + post.category + '/' + post.thread_title}>
+                    <ListGroupItemHeading>
+                    {post.thread_title}
+                    <hr />
+                    </ListGroupItemHeading>
+                    </Link>
+                    <ListGroupItemText>{post.post_content}</ListGroupItemText>
+                    <ListGroupItemText>
+                    {post.name} posted on {post.timestamp}
+                    </ListGroupItemText>
+                </ListGroupItem>
+                ))}
+            </ListGroup>
           </Col>
         </Row>
       </div>
