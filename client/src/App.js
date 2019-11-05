@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
+import SearchResults from "./pages/SearchResults";
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class App extends Component {
               <Route exact path="/home" component={Landing} />
               <Route path="/modules/past" component={PastModules} />
               <Route
-                path="/modules/:module_code/announcements"
+                exact path="/modules/:module_code/announcements"
                 render={props => (
                   <Announcements
                     {...props}
@@ -40,7 +41,16 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/modules/:module_code/forum"
+                path="/modules/:module_code/forum/search"
+                render={props => (
+                  <SearchResults
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                exact path="/modules/:module_code/forum"
                 render={props => (
                   <Forum
                     {...props}
@@ -59,7 +69,7 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/modules/:module_code/gradebook"
+                exact path="/modules/:module_code/gradebook"
                 render={props => (
                   <Gradebook
                     {...props}
