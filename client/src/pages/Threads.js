@@ -33,11 +33,11 @@ class Threads extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const userQuery = {
-      query: this.state.query
-    };
-    this.props.searchListings(userQuery);
-    this.props.history.push("/searchResults");
+    this.props.history.push({pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
+      module_code: this.props.module_code,
+      query: this.state.query,
+      category: this.props.category
+    }});
   };
   render() {
     return (
@@ -47,11 +47,11 @@ class Threads extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5 mb-3">{this.props.module_code} Forum</h1>
+            <h1 className="mt-5 mb-3">{this.props.module_code} {this.props.category} Forum</h1>
             <form onSubmit={this.handleSubmit} className="ml-3">
               <div class="row">
                 <div class="col">
-                  <div class="row">
+                  <div class="row mb-0">
                     <div class="input-field">
                       <input
                         type="text"
@@ -60,7 +60,7 @@ class Threads extends Component {
                         value={this.state.query}
                         onChange={this.handleChange}
                       />
-                      <label for="autocomplete-input">Search threads</label>
+                      <label for="autocomplete-input">Search Posts in {this.props.category}</label>
                       <i class="material-icons prefix">search</i>
                     </div>
                   </div>
@@ -85,7 +85,7 @@ class Threads extends Component {
                     </Link>
                   </ListGroupItemHeading>
                   <ListGroupItemText>
-                    {thread.timestamp} | {thread.name}
+                    Created by {thread.name} on {thread.timestamp.substring(0, 10)}, {thread.timestamp.substring(10)}
                   </ListGroupItemText>
                 </ListGroupItem>
               ))}

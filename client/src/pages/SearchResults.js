@@ -18,15 +18,28 @@ class SearchResults extends Component {
   }
 
   componentDidMount() {
-    axios
-      .post("/course/forum/search", {
-        module_code: this.props.module_code,
-        search_input: this.props.location.data.query
-      })
-      .then(res => {
-        this.setState({ postsResult: res.data });
-      })
-      .catch(err => console.log(err));
+      if (this.props.location.data.category) {
+        axios
+        .post("/course/forum/thread/search", {
+          module_code: this.props.module_code,
+          category: this.props.location.data.category,
+          search_input: this.props.location.data.query
+        })
+        .then(res => {
+          this.setState({ postsResult: res.data });
+        })
+        .catch(err => console.log(err));
+      } else {
+        axios
+        .post("/course/forum/search", {
+          module_code: this.props.module_code,
+          search_input: this.props.location.data.query
+        })
+        .then(res => {
+          this.setState({ postsResult: res.data });
+        })
+        .catch(err => console.log(err));
+      }
   }
 
   render() {
@@ -36,7 +49,7 @@ class SearchResults extends Component {
           <Col xs="3">
             <SideNav module_code={this.props.module_code} />
           </Col>
-          <Col>
+          <Col style={{display: this.state.postsResult.length !== 0 ? 'block' : 'none'}}>
             <h1 className="mt-5 mb-5">{this.props.module_code} Forum Search Results</h1>
             <ListGroup className='mr-5'>
                 {this.state.postsResult.map(post => (
@@ -54,6 +67,10 @@ class SearchResults extends Component {
                 </ListGroupItem>
                 ))}
             </ListGroup>
+          </Col>
+          <Col style={{display: this.state.postsResult.length === 0 ? 'block' : 'none'}}>
+            <h1 className="mt-5 mb-5">{this.props.module_code} Forum Search Results</h1>
+            Sorry, no posts with the keyword '{this.props.location.data.query}' found!
           </Col>
         </Row>
       </div>

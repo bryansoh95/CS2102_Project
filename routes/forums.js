@@ -105,7 +105,7 @@ AND LOWER(post_content) LIKE '%' || $2 || '%'
 `;
 
 const SEARCH_FOR_THREAD_POSTS = `
-SELECTP.module_code, P.category, P.thread_title, P.post_content, P.post_id, P.uname, U.name, TO_CHAR(P.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp
+SELECT P.module_code, P.category, P.thread_title, P.post_content, P.post_id, P.uname, U.name, TO_CHAR(P.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp
 FROM Posts P, Users U
 WHERE module_code = $1
 AND category = $2
@@ -439,7 +439,7 @@ router.post("/course/forum/search", (req, res, next) => {
 });
 
 router.post(
-  "/cours/forum/thread/search",
+  "/course/forum/thread/search",
   (req, res, next) => {
     const data = {
       module_code: req.body.module_code,

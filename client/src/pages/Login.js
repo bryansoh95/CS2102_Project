@@ -33,7 +33,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container pt-1">
         <div
           style={{ marginTop: "4rem", paddingRight: "150px" }}
           className="row"

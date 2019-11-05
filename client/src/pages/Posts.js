@@ -42,7 +42,8 @@ class Posts extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <ListGroup>
+            <h1 className="mt-5 mb-5">{this.props.module_code} {this.props.category} Forum: {this.props.thread_title}</h1>
+            <ListGroup className='mr-5'>
               {this.state.posts.map(post => (
                 <ListGroupItem>
                   <ListGroupItemHeading>

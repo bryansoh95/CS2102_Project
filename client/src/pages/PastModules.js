@@ -34,7 +34,7 @@ class PastModules extends Component {
   render() {
     return (
       <div>
-        <h1 className="mr-5 ml-5 mt-3">Past modules</h1>
+        <h1 className="mr-5 ml-5 mt-5 pt-5">Past modules</h1>
         <Row className="mr-5 ml-5 mt-3">
           {this.state.studentModules.map(module => (
             <Col sm="4">

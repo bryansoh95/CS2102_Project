@@ -47,7 +47,7 @@ class Forum extends Component {
             <form onSubmit={this.handleSubmit} className="ml-3">
               <div class="row">
                 <div class="col">
-                  <div class="row">
+                  <div class="row mb-0">
                     <div class="input-field">
                       <input
                         type="text"
@@ -56,7 +56,7 @@ class Forum extends Component {
                         value={this.state.query}
                         onChange={this.handleChange}
                       />
-                      <label for="autocomplete-input">Search threads</label>
+                      <label for="autocomplete-input">Search Posts in Forums</label>
                       <i class="material-icons prefix">search</i>
                     </div>
                   </div>
