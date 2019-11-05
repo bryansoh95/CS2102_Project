@@ -443,7 +443,6 @@ router.post(
 router.post("/course/forum/search", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
-    category: req.body.category,
     search_input: req.body.search_input
   };
   pool.query(
@@ -465,7 +464,6 @@ router.post(
     const data = {
       module_code: req.body.module_code,
       category: req.body.category,
-      thread_title: req.body.thread_title,
       search_input: req.body.search_input
     };
     pool.query(

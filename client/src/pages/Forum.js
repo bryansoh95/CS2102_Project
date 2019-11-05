@@ -28,14 +28,13 @@ class Forum extends Component {
     this.setState({ query: e.target.value });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   const userQuery = {
-  //     query: this.state.query
-  //   };
-  //   this.props.searchListings(userQuery);
-  //   this.props.history.push("/searchResults");
-  // };
+  handleSubmit = e => {
+    e.preventDefault();
+    const userQuery = {
+      query: this.state.query
+    };
+    this.props.history.push("/modules/" + this.props.module_code + '/forum/search');
+  };
   render() {
     return (
       <div>
