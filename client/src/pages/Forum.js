@@ -7,11 +7,12 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemText,
+  Button
 } from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
-import FormB from '../components/FormB'
+import FormB from "../components/FormB";
 
 class Forum extends Component {
   constructor(props) {
@@ -33,12 +34,20 @@ class Forum extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.history.push({
-      pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
+      pathname: "/modules/" + this.props.module_code + "/forum/search",
+      data: {
         module_code: this.props.module_code,
         query: this.state.query
       }
     });
   };
+
+  hotThreadsRouteChange = () => {
+    this.props.history.push(
+      "/modules/" + this.props.module_code + "/forum/hot_threads/hot"
+    );
+  };
+
   render() {
     return (
       <div>
@@ -49,15 +58,27 @@ class Forum extends Component {
           <Col>
             <Row className="mt-5 mb-0">
               <Col sm={{ size: 3, order: 1 }}>
-                <h1 className='mt-3'>{this.props.module_code} Forum</h1>
+                <h1 className="mt-3">{this.props.module_code} Forum</h1>
               </Col>
-              <Col style={{
-                display:
-                  this.props.user.username.substring(0, 1) === "A"
-                    ? "block"
-                    : "none"
-              }} className='mt-4' sm={{ size: 4, order: 2 }}>
-                <FormB postRoute='/course/forum/add' secondPostRoute='/course/forum/thread/posts/new' data={{ "module_code": this.props.module_code }} buttonLabel='Create new Forum' formHeader='Create new Forum' field='Forum Name' action='Create' />
+              <Col
+                style={{
+                  display:
+                    this.props.user.username.substring(0, 1) === "A"
+                      ? "block"
+                      : "none"
+                }}
+                className="mt-4"
+                sm={{ size: 4, order: 2 }}
+              >
+                <FormB
+                  postRoute="/course/forum/add"
+                  secondPostRoute="/course/forum/thread/posts/new"
+                  data={{ module_code: this.props.module_code }}
+                  buttonLabel="Create new Forum"
+                  formHeader="Create new Forum"
+                  field="Forum Name"
+                  action="Create"
+                />
               </Col>
               <Col sm={{ size: 3, order: 3 }}>
                 <form onSubmit={this.handleSubmit} className="ml-3">
@@ -72,7 +93,9 @@ class Forum extends Component {
                             value={this.state.query}
                             onChange={this.handleChange}
                           />
-                          <label for="autocomplete-input">Search Posts in Forum</label>
+                          <label for="autocomplete-input">
+                            Search Posts in Forum
+                          </label>
                           <i class="material-icons prefix">search</i>
                         </div>
                       </div>
@@ -96,6 +119,9 @@ class Forum extends Component {
                 </Link>
               ))}
             </ListGroup>
+            <Button color="primary" onClick={this.hotThreadsRouteChange}>
+              View Hot Threads
+            </Button>
           </Col>
         </Row>
       </div>
@@ -105,6 +131,6 @@ class Forum extends Component {
 
 const mapStateToProps = state => ({
   user: state.user
-})
+});
 
 export default connect(mapStateToProps)(Forum);

@@ -115,16 +115,23 @@ AND LOWER(post_content) LIKE '%' || $3 || '%'
 `;
 
 const GET_COURSE_HOT_FORUM_THREADS = `
-SELECT category, thread_title 
-FROM Posts
-WHERE module_code = $1
-GROUP BY category, thread_title
-HAVING COUNT(*) >= ALL (
-    SELECT COUNT(*)
-    FROM Posts
-    WHERE module_code = $1
-    GROUP BY category, thread_title
+WITH hottest_cat_and_thread AS (
+  SELECT category, thread_title 
+  FROM Posts
+  WHERE module_code = $1
+  GROUP BY category, thread_title
+  HAVING COUNT(*) >= ALL (
+      SELECT COUNT(*)
+      FROM Posts
+      WHERE module_code = $1
+      GROUP BY category, thread_title
+  )
 )
+SELECT t.module_code, t.category, t.thread_title, t.uname, u.name, TO_CHAR(t.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp 
+FROM Threads t JOIN Users u ON t.uname = u.username
+WHERE module_code = $1
+AND category = (SELECT category FROM hottest_cat_and_thread)
+AND thread_title = (SELECT thread_title FROM hottest_cat_and_thread)
 `;
 
 router.post("/course/forum", (req, res, next) => {

@@ -8,6 +8,7 @@ import Tutors from "./pages/Tutors";
 import Announcements from "./pages/Announcements";
 import Forum from "./pages/Forum";
 import Threads from "./pages/Threads";
+import HotThreads from "./pages/HotThreads";
 import Posts from "./pages/Posts";
 import Login from "./pages/Login";
 import PastModules from "./pages/PastModules";
@@ -71,6 +72,15 @@ class App extends Component {
                     {...props}
                     module_code={props.match.params.module_code}
                     category={props.match.params.category}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/forum/hot_threads/hot"
+                render={props => (
+                  <HotThreads
+                    {...props}
+                    module_code={props.match.params.module_code}
                   />
                 )}
               />
