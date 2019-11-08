@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
+import FormB from '../components/FormB'
 
 class Posts extends Component {
   constructor(props) {
@@ -43,10 +44,17 @@ class Posts extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5 mb-5">
-              {this.props.module_code} {this.props.category} Forum:{" "}
-              {this.props.thread_title}
-            </h1>
+            <Row sm={{ size: 7, order: 1 }} className="mt-5 mb-5">
+              <Col className='mt-3'>
+                <h1>
+                  {this.props.module_code} {this.props.category} Forum:{" "}
+                  {this.props.thread_title}
+                </h1>
+              </Col>
+              <Col sm={{ size: 4, order: 2 }} className='mt-4'>
+                <FormB postRoute='/course/forum/thread/posts/new' buttonLabel='Add new Post' formHeader='Add new Post' field='Post Content' action='Post' data={{'module_code': this.props.module_code, 'category': this.props.category, 'thread_title': this.props.thread_title}} />
+              </Col>
+            </Row>
             <ListGroup className="mr-5">
               {this.state.posts.map(post => (
                 <ListGroupItem>
@@ -61,11 +69,6 @@ class Posts extends Component {
                 </ListGroupItem>
               ))}
             </ListGroup>
-            <AddPostForm
-              module_code={this.props.module_code}
-              category={this.props.category}
-              thread_title={this.props.thread_title}
-            />
           </Col>
         </Row>
       </div>

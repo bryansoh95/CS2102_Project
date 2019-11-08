@@ -25,6 +25,7 @@ SELECT t.module_code, t.category, t.thread_title, t.uname, u.name, TO_CHAR(t.tim
 FROM Threads t JOIN Users u ON t.uname = u.username
 WHERE module_code = $1
 AND category = $2
+ORDER BY t.timestamp DESC
 `;
 
 const GET_ALL_CATEGORIES_FOR_COURSE = `

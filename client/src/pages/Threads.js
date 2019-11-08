@@ -60,7 +60,7 @@ class Threads extends Component {
                   <FormA firstPostRoute='/course/forum/thread/new' secondPostRoute='/course/forum/thread/posts/new' data={{"module_code": this.props.module_code, "category": this.props.category}} buttonLabel='Create new Thread' formHeader='Create new Thread' firstField='Thread Title' secondField='Post Content' action='Create' />
                 </div>
               </Col>
-              <Col sm={{ size: 3, order: 3 }}>
+              <Col sm={{ size: 3, order: 2 }}>
                 <form onSubmit={this.handleSubmit} className="ml-3">
                   <div class="row">
                     <div class="col">
