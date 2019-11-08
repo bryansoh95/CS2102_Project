@@ -20,7 +20,7 @@ class SideNav extends Component {
         <hr />
         <Nav vertical>
           <NavItem className="mt-2 ml-5">
-            <NavLink style={{ fontSize: 24 }} href="#">
+            <NavLink style={{ fontSize: 24 }}>
               <Link
                 to={"/modules/" + this.props.module_code + "/announcements"}
               >
@@ -29,28 +29,28 @@ class SideNav extends Component {
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">
-            <NavLink style={{ fontSize: 24 }} href="#">
+            <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/forum"}>
                 Forum
               </Link>
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">
-            <NavLink style={{ fontSize: 24 }} href="#">
+            <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/gradebook"}>
                 Gradebook
               </Link>
             </NavLink>
           </NavItem>
           <NavItem className="mt-2 ml-5">
-            <NavLink style={{ fontSize: 24 }} href="#">
+            <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/tutors"}>
                 Tutors
               </Link>
             </NavLink>
           </NavItem>
           <NavItem
-            className="mt-2 ml-5 mb-3"
+            className="mt-2 ml-5"
             style={{
               display:
                 this.props.user.username.substring(0, 1) === "A"
@@ -58,9 +58,18 @@ class SideNav extends Component {
                   : "none"
             }}
           >
-            <NavLink style={{ fontSize: 24 }} href="#">
+            <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/requests"}>
                 Module Requests
+              </Link>
+            </NavLink>
+          </NavItem>
+          <NavItem className="mt-2 ml-5 mb-3">
+            <NavLink style={{ fontSize: 24 }}>
+              <Link
+                to={"/modules/" + this.props.module_code + "/group/student"}
+              >
+                Tutorial Groups
               </Link>
             </NavLink>
           </NavItem>

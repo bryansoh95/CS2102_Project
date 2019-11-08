@@ -16,6 +16,7 @@ import store from "./store";
 import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
 import SearchResults from "./pages/SearchResults";
+import TutorialGroups from "./pages/TutorialGroups";
 
 class App extends Component {
   constructor(props) {
@@ -106,6 +107,15 @@ class App extends Component {
                 path="/modules/:module_code/requests"
                 render={props => (
                   <ModuleRequests
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/group/student"
+                render={props => (
+                  <TutorialGroups
                     {...props}
                     module_code={props.match.params.module_code}
                   />
