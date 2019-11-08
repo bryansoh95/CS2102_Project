@@ -43,13 +43,13 @@ class Posts extends Component {
       post_id: this.state.posts[index].post_id,
       uname: this.props.user.username
     })
-    .then(res => {
-      alert('delete success!')
-      window.location.reload()
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        alert('delete success!')
+        window.location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render() {
@@ -79,19 +79,26 @@ class Posts extends Component {
                     <hr />
                   </ListGroupItemHeading>
                   <Row>
-                    <Col sm={{ size: 8, order: 1 }}>
+                    <Col sm={{ size: 8 }}>
                       <ListGroupItemText>{post.post_content}</ListGroupItemText>
                       <ListGroupItemText>
                         {post.name} posted on {post.timestamp}
                       </ListGroupItemText>
                     </Col>
-                    <Col style={{
+                    <Col xs='text-xs-right' style={{
                       display:
                         this.props.user.username === post.uname
                           ? "block"
                           : "none"
-                    }} sm={{ size: 3, order: 2 }}>
+                    }}>
                       <FormB postRoute='/course/forum/thread/posts/edit' data={{ "module_code": this.props.module_code, "post_id": post.post_id, 'thread_title': post.thread_title, 'category': post.category }} buttonLabel='Edit Post' formHeader='Edit Post' field='Post Content' action='Post' />
+                    </Col>
+                    <Col className='ml-2' xs='text-xs-left' style={{
+                      display:
+                        this.props.user.username === post.uname
+                          ? "block"
+                          : "none"
+                    }}>
                       <Button color="danger" onClick={() => this.handleDelete(index)}>Delete</Button>{' '}
                     </Col>
                   </Row>
