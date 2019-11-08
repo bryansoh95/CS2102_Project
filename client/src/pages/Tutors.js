@@ -89,13 +89,6 @@ class Tutors extends Component {
                         Delete
                       </Button>{" "}
                     </Col>
-                    <Button
-                      color="danger"
-                      className="mr-3 mt-1"
-                      onClick={() => this.handleDelete(index)}
-                    >
-                      Delete
-                    </Button>{" "}
                   </Row>
                 </ListGroupItem>
               ))}
