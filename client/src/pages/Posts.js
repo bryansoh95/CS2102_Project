@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SideNav from "../components/SideNav";
+import AddPostForm from "../components/AddPostForm";
 import {
   Row,
   Col,
@@ -42,8 +43,11 @@ class Posts extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5 mb-5">{this.props.module_code} {this.props.category} Forum: {this.props.thread_title}</h1>
-            <ListGroup className='mr-5'>
+            <h1 className="mt-5 mb-5">
+              {this.props.module_code} {this.props.category} Forum:{" "}
+              {this.props.thread_title}
+            </h1>
+            <ListGroup className="mr-5">
               {this.state.posts.map(post => (
                 <ListGroupItem>
                   <ListGroupItemHeading>
@@ -57,6 +61,11 @@ class Posts extends Component {
                 </ListGroupItem>
               ))}
             </ListGroup>
+            <AddPostForm
+              module_code={this.props.module_code}
+              category={this.props.category}
+              thread_title={this.props.thread_title}
+            />
           </Col>
         </Row>
       </div>

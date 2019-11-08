@@ -60,7 +60,7 @@ class RequestCollapseForm extends Component {
         <Button color="info" onClick={this.toggleModal}>
           Request Module
         </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggleDropdown} size="lg">
+        <Modal isOpen={this.state.modal} size="lg">
           <ModalHeader>Select a Module!</ModalHeader>
           <FormGroup>
             <Label for="exampleSelect">Select</Label>
