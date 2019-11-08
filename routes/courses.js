@@ -116,6 +116,7 @@ SELECT A.module_code, A.title, A.puname, A.content, TO_CHAR(A.timestamp, 'dd-mm-
 FROM Announcements A, Users U
 WHERE module_code = $1 
 AND A.puname = U.username
+ORDER BY A.timestamp DESC
 `;
 
 const ADD_NEW_COURSE_ANNOUNCEMENT = `

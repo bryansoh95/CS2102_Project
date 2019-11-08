@@ -10,6 +10,8 @@ import {
   ListGroupItemText
 } from "reactstrap";
 import axios from "axios";
+import FormA from '../components/FormA'
+import { connect } from "react-redux";
 
 class Announcements extends Component {
   constructor(props) {
@@ -38,7 +40,19 @@ class Announcements extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5">{this.props.module_code} Announcements</h1>
+            <Row className="mt-5">
+              <Col sm={{ size: 5, order: 1 }}>
+                <h1 >{this.props.module_code} Announcements</h1>
+              </Col>
+              <Col style={{
+                display:
+                  this.props.user.username.substring(0, 1) === "A"
+                    ? "block"
+                    : "none"
+              }} sm={{ size: 4, order: 1 }} className='mt-2'>
+                <FormA firstPostRoute='/course/announcements/new' buttonLabel='Add new Announcement' formHeader='Add new Announcement' firstField='Announcement Title' secondField='Announcement Details' action='Post' data={{ 'module_code': this.props.module_code }} />
+              </Col>
+            </Row>
             <ListGroup>
               {this.state.moduleAnnouncements.map(announcement => (
                 <ListGroupItem>
@@ -60,4 +74,8 @@ class Announcements extends Component {
   }
 }
 
-export default Announcements;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Announcements);
