@@ -31,13 +31,13 @@ class Tutors extends Component {
       suname: this.state.tutors[index].suname,
       module_code: this.props.module_code
     })
-    .then(res => {
-      alert('delete success!')
-      window.location.reload()
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        alert('delete success!')
+        window.location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render() {
@@ -63,7 +63,12 @@ class Tutors extends Component {
                     <Col>
                       <ListGroupItemHeading>Tutorial Group {tutor.tutorial_group}: {tutor.name}</ListGroupItemHeading>
                     </Col>
-                    <Col>
+                    <Col style={{
+                      display:
+                        this.props.user.username.substring(0, 1) === "A"
+                          ? "block"
+                          : "none"
+                    }}>
                       <Button color="danger" onClick={() => this.handleDelete(index)}>Delete</Button>{' '}
                     </Col>
                   </Row>
