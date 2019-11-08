@@ -8,9 +8,7 @@ import {
   ListGroupItem,
   ListGroupItemHeading,
   ListGroupItemText,
-  Pagination,
-  PaginationItem,
-  PaginationLink
+  Button
 } from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -36,6 +34,24 @@ class Posts extends Component {
       })
       .catch(err => console.log(err));
   }
+
+  handleDelete = index => {
+    axios.post('/course/forum/thread/posts/delete', {
+      module_code: this.props.module_code,
+      category: this.props.category,
+      thread_title: this.props.thread_title,
+      post_id: this.state.posts[index].post_id,
+      uname: this.props.user.username
+    })
+    .then(res => {
+      alert('delete success!')
+      window.location.reload()
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   render() {
     return (
       <div>
@@ -52,20 +68,33 @@ class Posts extends Component {
                 </h1>
               </Col>
               <Col sm={{ size: 4, order: 2 }} className='mt-4'>
-                <FormB postRoute='/course/forum/thread/posts/new' buttonLabel='Add new Post' formHeader='Add new Post' field='Post Content' action='Post' data={{'module_code': this.props.module_code, 'category': this.props.category, 'thread_title': this.props.thread_title}} />
+                <FormB postRoute='/course/forum/thread/posts/new' buttonLabel='Add new Post' formHeader='Add new Post' field='Post Content' action='Post' data={{ 'module_code': this.props.module_code, 'category': this.props.category, 'thread_title': this.props.thread_title }} />
               </Col>
             </Row>
             <ListGroup className="mr-5">
-              {this.state.posts.map(post => (
+              {this.state.posts.map((post, index) => (
                 <ListGroupItem>
                   <ListGroupItemHeading>
                     {post.thread_title}
                     <hr />
                   </ListGroupItemHeading>
-                  <ListGroupItemText>{post.post_content}</ListGroupItemText>
-                  <ListGroupItemText>
-                    {post.name} posted on {post.timestamp}
-                  </ListGroupItemText>
+                  <Row>
+                    <Col sm={{ size: 8, order: 1 }}>
+                      <ListGroupItemText>{post.post_content}</ListGroupItemText>
+                      <ListGroupItemText>
+                        {post.name} posted on {post.timestamp}
+                      </ListGroupItemText>
+                    </Col>
+                    <Col style={{
+                      display:
+                        this.props.user.username === post.uname
+                          ? "block"
+                          : "none"
+                    }} sm={{ size: 3, order: 2 }}>
+                      <FormB postRoute='/course/forum/thread/posts/edit' data={{ "module_code": this.props.module_code, "post_id": post.post_id, 'thread_title': post.thread_title, 'category': post.category }} buttonLabel='Edit Post' formHeader='Edit Post' field='Post Content' action='Post' />
+                      <Button color="danger" onClick={() => this.handleDelete(index)}>Delete</Button>{' '}
+                    </Col>
+                  </Row>
                 </ListGroupItem>
               ))}
             </ListGroup>
