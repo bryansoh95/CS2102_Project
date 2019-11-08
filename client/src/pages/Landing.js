@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ModuleListingContainer from "../components/ModuleListingContainer";
 import HomePageAnnouncements from "../components/HomePageAnnouncements";
-import CollapseForm from "../components/CollapseForm";
+import RequestCollapseForm from "../components/RequestCollapseForm";
 import { Container, Row, Col, Button } from "reactstrap";
 import { connect } from "react-redux";
 
@@ -10,16 +10,17 @@ class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showComponent: false,
+      showComponent: false
     };
-    this._onButtonClick = this._onButtonClick.bind(this);
+    // this._onButtonClick = this._onButtonClick.bind(this);
   }
 
-  _onButtonClick() {
-    this.setState({
-      showComponent: true,
-    });
-  }
+  // _onButtonClick() {
+  //   this.setState({
+  //     showComponent: true
+  //   });
+  // }
+
   render() {
     return (
       <div>
@@ -28,15 +29,9 @@ class Landing extends Component {
             <h2>Welcome, {this.props.user.name}</h2>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
-            <Button color="info" onClick={this._onButtonClick}>Request Module (if stud)</Button>
-            {this.state.showComponent ?
-              <CollapseForm /> :
-              null
-            }
-            <var> </var>
-            <Button color="info">View Module Requests</Button>
+            {/* {this.state.showComponent ? <CollapseForm /> : null} */}
+            <RequestCollapseForm />
           </Col>
-          <Col sm={{ size: 5, order: 2 }}></Col>
         </Row>
         <Row className="pt-3">
           <Col sm={{ size: 5, order: 2, offset: 1 }}>

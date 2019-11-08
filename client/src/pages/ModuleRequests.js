@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import SideNav from "../components/SideNav";
+import { connect } from "react-redux";
 
 class ModuleRequests extends Component {
   constructor(props) {
@@ -33,11 +34,30 @@ class ModuleRequests extends Component {
   }
 
   handleAccept = index => {
+    axios
+      .post("/course/add", {
+        suname: this.state.moduleRequests[index].suname,
+        module_code: this.props.module_code,
+        puname: this.props.user.username
+      })
+      .catch(err => {
+        console.log(err);
+      });
     console.log(this.state.moduleRequests[index].suname);
+    window.location.reload();
   };
 
   handleReject = index => {
+    axios
+      .post("/course/deleteRequest", {
+        suname: this.state.moduleRequests[index].suname,
+        module_code: this.props.module_code
+      })
+      .catch(err => {
+        console.log(err);
+      });
     console.log(this.state.moduleRequests[index].suname);
+    window.location.reload();
   };
 
   render() {
@@ -89,4 +109,8 @@ class ModuleRequests extends Component {
   }
 }
 
-export default ModuleRequests;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(ModuleRequests);

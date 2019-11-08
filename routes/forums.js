@@ -35,7 +35,7 @@ WHERE module_code = $1
 
 const NEW_THREAD_ENTRY = `
 INSERT INTO Threads
-VALUES ($1, $2, $3, $4, NOW())
+VALUES ($1, $2, $3, $4, NOW()::timestamp(0))
 `;
 
 const AMEND_THREAD_ENTRY = `
@@ -64,7 +64,7 @@ AND thread_title = $3
 
 const NEW_POST_ENTRY = `
 INSERT INTO Posts
-VALUES ($1, $2, $3, $4, $5, NOW(), $6)
+VALUES ($1, $2, $3, $4, $5, NOW()::timestamp(0), $6)
 `;
 
 const GET_ALL_POSTS_FOR_THREAD = `
@@ -79,7 +79,7 @@ ORDER BY timestamp ASC
 
 const AMEND_POST_ENTRY = `
 UPDATE Posts
-SET post_content = $1, timestamp = NOW()
+SET post_content = $1, timestamp = NOW()::timestamp(0)
 WHERE uname = $2
 AND module_code = $3
 AND category = $4
@@ -438,29 +438,23 @@ router.post("/course/forum/search", (req, res, next) => {
   );
 });
 
-router.post(
-  "/course/forum/thread/search",
-  (req, res, next) => {
-    const data = {
-      module_code: req.body.module_code,
-      category: req.body.category,
-      search_input: req.body.search_input
-    };
-    pool.query(
-      SEARCH_FOR_THREAD_POSTS,
-      [
-        data.module_code,
-        data.category,
-        data.search_input.toLowerCase()
-      ],
-      (err, dbRes) => {
-        if (err) {
-          res.send("error!");
-        } else {
-          res.send(dbRes.rows);
-        }
+router.post("/course/forum/thread/search", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    search_input: req.body.search_input
+  };
+  pool.query(
+    SEARCH_FOR_THREAD_POSTS,
+    [data.module_code, data.category, data.search_input.toLowerCase()],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
       }
-    );
-  });
+    }
+  );
+});
 
 module.exports = router;

@@ -50,6 +50,12 @@ INSERT INTO Enrolls
 VALUES ($1, $2)
 `;
 
+const PROF_DELETE_STUDENT_COURSE_REQUEST = `
+DELETE FROM Requests
+WHERE suname = $1
+AND module_code = $2
+`;
+
 const CHECK_PROF_TEACHES = `
 SELECT * 
 FROM Teaches
@@ -59,7 +65,7 @@ AND puname = $2
 
 const STUDENT_REQUEST_FOR_NEW_COURSE = `
 INSERT INTO Requests
-VALUES ($1, $2, NOW())
+VALUES ($1, $2, NOW()::timestamp(0))
 `;
 
 const GET_ALL_TUTORS_FOR_COURSE = `
@@ -114,11 +120,11 @@ AND A.puname = U.username
 
 const ADD_NEW_COURSE_ANNOUNCEMENT = `
 INSERT INTO Announcements
-VALUES ($1, $2, $3, $4, NOW())
+VALUES ($1, $2, $3, $4, NOW()::timestamp(0))
 `;
 
 const EDIT_COURSE_ANNOUNCEMENT = `
-UPDATE Announcements SET title = $1, content = $2, timestamp = NOW()
+UPDATE Announcements SET title = $1, content = $2, timestamp = NOW()::timestamp(0)
 WHERE module_code = $3
 AND title = $4
 AND puname = $5
@@ -324,6 +330,24 @@ router.post("/course/add", (req, res, next) => {
   );
 });
 
+router.post("/course/deleteRequest", (req, res, next) => {
+  const data = {
+    suname: req.body.suname,
+    module_code: req.body.module_code
+  };
+  pool.query(
+    PROF_DELETE_STUDENT_COURSE_REQUEST,
+    [data.suname, data.module_code],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send("deleted student request");
+      }
+    }
+  );
+});
+
 router.post("/course/announcements", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
@@ -504,6 +528,7 @@ router.post("/course/tutors/delete", (req, res, next) => {
 });
 
 router.post("/course/all/request", (req, res, next) => {
+  console.log(req.body.suname + " " + req.body.module_code);
   const data = {
     suname: req.body.suname,
     module_code: req.body.module_code
