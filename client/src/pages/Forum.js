@@ -48,6 +48,15 @@ class Forum extends Component {
     );
   };
 
+  handleDelete = (module_code, category) => {
+    axios.post("/course/forum/delete", {
+      module_code: module_code,
+      category: category,
+      puname: this.props.user.username
+    });
+    window.location.reload();
+  };
+
   render() {
     return (
       <div>
@@ -106,17 +115,41 @@ class Forum extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleForums.map(forum => (
-                <Link
-                  to={
-                    "/modules/" + forum.module_code + "/forum/" + forum.category
-                  }
-                >
-                  <ListGroupItem action tag="button">
-                    <ListGroupItemHeading>
-                      {forum.category}
-                    </ListGroupItemHeading>
-                  </ListGroupItem>
-                </Link>
+                <Row>
+                  <Col sm={{ size: 10 }}>
+                    <Link
+                      to={
+                        "/modules/" +
+                        forum.module_code +
+                        "/forum/" +
+                        forum.category
+                      }
+                    >
+                      <ListGroupItem action tag="button">
+                        <ListGroupItemHeading>
+                          {forum.category}
+                        </ListGroupItemHeading>
+                      </ListGroupItem>
+                    </Link>
+                  </Col>
+                  <Col
+                    style={{
+                      display:
+                        this.props.user.username.substring(0, 1) === "A"
+                          ? "block"
+                          : "none"
+                    }}
+                  >
+                    <Button
+                      color="danger"
+                      onClick={() =>
+                        this.handleDelete(forum.module_code, forum.category)
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                </Row>
               ))}
             </ListGroup>
             <Button color="primary" onClick={this.hotThreadsRouteChange}>
