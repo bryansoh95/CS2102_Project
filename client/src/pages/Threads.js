@@ -158,7 +158,7 @@ class Threads extends Component {
                       }}
                       onClick={() => this.handleDeleteThread(index)}
                     >
-                      delete thread
+                      delete
                     </Button>
                   </Row>
                 </ListGroupItem>

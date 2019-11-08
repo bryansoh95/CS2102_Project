@@ -75,7 +75,7 @@ class Announcements extends Component {
                 />
               </Col>
             </Row>
-            <ListGroup>
+            <ListGroup className="mr-5">
               {this.state.moduleAnnouncements.map(announcement => (
                 <ListGroupItem>
                   <Row>

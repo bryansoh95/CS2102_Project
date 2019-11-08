@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { connect } from "react-redux";
 
-class TutorialGroups extends Component {
+class TutorialGroupsStudent extends Component {
   constructor(props) {
     super(props);
     this.state = { moduleTutorialGroupStudents: [], tutorialGroup: "" };
@@ -48,6 +48,14 @@ class TutorialGroups extends Component {
             <h1 className="mt-5">
               {this.props.module_code} Tutorial Group {this.state.tutorialGroup}
             </h1>
+            <p
+              style={{
+                display: this.state.tutorialGroup === "" ? "none" : "block"
+              }}
+              className="ml-1 mt-3"
+            >
+              You have yet to be assigned to any tutorial group for this module.
+            </p>
             <ListGroup className="mr-5">
               {this.state.moduleTutorialGroupStudents.map(student => (
                 <ListGroupItem>
@@ -73,4 +81,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default connect(mapStateToProps)(TutorialGroups);
+export default connect(mapStateToProps)(TutorialGroupsStudent);

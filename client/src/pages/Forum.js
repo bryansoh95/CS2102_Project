@@ -152,7 +152,15 @@ class Forum extends Component {
                 </Row>
               ))}
             </ListGroup>
-            <Button color="primary" onClick={this.hotThreadsRouteChange}>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              color="primary"
+              className="float-right mr-5"
+              onClick={this.hotThreadsRouteChange}
+            >
               View Hot Threads
             </Button>
           </Col>

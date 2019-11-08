@@ -35,24 +35,30 @@ class SideNav extends Component {
               </Link>
             </NavLink>
           </NavItem>
-          <NavItem style={{
-            display:
-              this.props.user.username.substring(0, 1) === "A"
-                ? "block"
-                : "none"
-          }} className="mt-2 ml-5">
+          <NavItem
+            style={{
+              display:
+                this.props.user.username.substring(0, 1) === "A"
+                  ? "block"
+                  : "none"
+            }}
+            className="mt-2 ml-5"
+          >
             <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/assessment"}>
                 Assessment
               </Link>
             </NavLink>
           </NavItem>
-          <NavItem style={{
-            display:
-              this.props.user.username.substring(0, 1) === "E"
-                ? "block"
-                : "none"
-          }} className="mt-2 ml-5">
+          <NavItem
+            style={{
+              display:
+                this.props.user.username.substring(0, 1) === "E"
+                  ? "block"
+                  : "none"
+            }}
+            className="mt-2 ml-5"
+          >
             <NavLink style={{ fontSize: 24 }}>
               <Link to={"/modules/" + this.props.module_code + "/gradebook"}>
                 Gradebook
@@ -83,10 +89,8 @@ class SideNav extends Component {
           </NavItem>
           <NavItem className="mt-2 ml-5 mb-3">
             <NavLink style={{ fontSize: 24 }}>
-              <Link
-                to={"/modules/" + this.props.module_code + "/group/student"}
-              >
-                Tutorial Groups
+              <Link to={"/modules/" + this.props.module_code + "/group"}>
+                Groups
               </Link>
             </NavLink>
           </NavItem>

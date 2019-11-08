@@ -17,8 +17,9 @@ import store from "./store";
 import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
 import SearchResults from "./pages/SearchResults";
-import TutorialGroups from "./pages/TutorialGroups";
-import Assessment from './pages/Assessment'
+import TutorialGroupsStudent from "./pages/TutorialGroupsStudent";
+import Assessment from "./pages/Assessment";
+import Groups from "./pages/Groups";
 
 class App extends Component {
   constructor(props) {
@@ -124,16 +125,54 @@ class App extends Component {
                 )}
               />
               <Route
-                path="/modules/:module_code/group/student"
+                exact
+                path="/modules/:module_code/group"
                 render={props => (
-                  <TutorialGroups
+                  <Groups
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              {/* <Route
+                path="/modules/:module_code/group/tutorial/student"
+                render={props => (
+                  <TutorialGroupsStudent
                     {...props}
                     module_code={props.match.params.module_code}
                   />
                 )}
               />
               <Route
-                exact path="/modules/:module_code/assessment"
+                path="/modules/:module_code/group/tutorial/prof"
+                render={props => (
+                  <TutorialGroupsProf
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/group/project/student"
+                render={props => (
+                  <ProjectGroupsStudent
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/group/project/prof"
+                render={props => (
+                  <ProjectGroupsProf
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              /> */}
+              <Route
+                exact
+                path="/modules/:module_code/assessment"
                 render={props => (
                   <Assessment
                     {...props}
