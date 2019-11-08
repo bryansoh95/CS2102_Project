@@ -81,7 +81,6 @@ class Forum extends Component {
               >
                 <FormB
                   postRoute="/course/forum/add"
-                  secondPostRoute="/course/forum/thread/posts/new"
                   data={{ module_code: this.props.module_code }}
                   buttonLabel="Create new Forum"
                   formHeader="Create new Forum"
