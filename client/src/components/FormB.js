@@ -28,7 +28,9 @@ const FormB = (props) => {
         data['uname'] = props.user.username
         data['puname'] = props.user.username
         data['post_content'] = input
-        data['category'] = input
+        if (!data.category) {
+            data['category'] = input
+        }
         axios.post(postRoute, data)
         .then(res => {
             window.location.reload()
