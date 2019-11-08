@@ -52,7 +52,7 @@ class Posts extends Component {
                 </h1>
               </Col>
               <Col sm={{ size: 4, order: 2 }} className='mt-4'>
-                <FormB postRoute='/course/forum/thread/posts/new' buttonLabel='Add new Post' formHeader='Add new Post' field='Post Content' action='Post' data={{'module_code': this.props.module_code, 'category': this.props.category, 'thread_title': this.props.thread_title}} />
+                <FormB postRoute='/course/forum/thread/posts/new' buttonLabel='Add new Post' formHeader='Add new Post' field='Post Content' action='Post' data={{'module_code': this.props.module_code, 'forum_category': this.props.category, 'thread_title': this.props.thread_title}} />
               </Col>
             </Row>
             <ListGroup className="mr-5">

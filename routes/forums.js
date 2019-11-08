@@ -329,7 +329,7 @@ router.post("/course/forum/thread/posts", (req, res, next) => {
 router.post("/course/forum/thread/posts/new", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
-    category: req.body.category,
+    category: req.body.forum_category,
     thread_title: req.body.thread_title,
     post_content: req.body.post_content,
     uname: req.body.uname
