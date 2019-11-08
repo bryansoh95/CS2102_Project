@@ -649,13 +649,17 @@ router.post("/course/assessment/scores", (req, res, next) => {
     module_code: req.body.module_code,
     title: req.body.title
   };
-  pool.query(GET_CURRENT_ASSESSMENT_SCORES, [data.module_code, data.title], (err, dbRes) => {
-    if (err) {
-      res.send("error!");
-    } else {
-      res.send(dbRes.rows);
+  pool.query(
+    GET_CURRENT_ASSESSMENT_SCORES,
+    [data.module_code, data.title],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
     }
-  });
+  );
 });
 
 router.post("/course/assessment/add", (req, res, next) => {
@@ -814,7 +818,7 @@ router.post("/course/gradebook/add", (req, res, next) => {
   );
 });
 
-router.delete("/course/gradebook/delete", (req, res, next) => {
+router.post("/course/gradebook/delete", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
@@ -848,7 +852,7 @@ router.delete("/course/gradebook/delete", (req, res, next) => {
   );
 });
 
-router.put("/course/gradebook/edit", (req, res, next) => {
+router.post("/course/gradebook/edit", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     title: req.body.title,
