@@ -56,7 +56,7 @@ class Threads extends Component {
                 <div>
                   <h1 className='mt-3'>{this.props.module_code} {this.props.category} Forum</h1>
                 </div>
-                <div>
+                <div className='mt-4 mb-3'>
                   <FormA firstPostRoute='/course/forum/thread/new' secondPostRoute='/course/forum/thread/posts/new' data={{"module_code": this.props.module_code, "category": this.props.category}} buttonLabel='Create new Thread' formHeader='Create new Thread' firstField='Thread Title' secondField='Post Content' action='Create' />
                 </div>
               </Col>

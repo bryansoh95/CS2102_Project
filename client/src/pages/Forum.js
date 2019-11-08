@@ -47,7 +47,7 @@ class Forum extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <Row className="mt-5 mb-3">
+            <Row className="mt-5 mb-0">
               <Col sm={{ size: 3, order: 1 }}>
                 <h1 className='mt-3'>{this.props.module_code} Forum</h1>
               </Col>
