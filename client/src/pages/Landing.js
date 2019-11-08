@@ -37,7 +37,12 @@ class Landing extends Component {
           <Col sm={{ size: 5, order: 2, offset: 1 }}>
             <h2>Your Modules</h2>
             <ModuleListingContainer />
-            <Link to="/modules/past">View your past modules</Link>
+            <Link style={{
+              display:
+                this.props.user.username.substring(0, 1) === "E"
+                  ? "block"
+                  : "none"
+            }} to="/modules/past">View your past modules</Link>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
             <h2>Announcements</h2>
