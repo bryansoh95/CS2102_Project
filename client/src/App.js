@@ -18,6 +18,7 @@ import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
 import SearchResults from "./pages/SearchResults";
 import TutorialGroupsStudent from "./pages/TutorialGroupsStudent";
+import ProjectGroupsStudent from "./pages/ProjectGroupsStudent";
 import Assessment from "./pages/Assessment";
 import Groups from "./pages/Groups";
 
@@ -134,7 +135,7 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route
+              <Route
                 path="/modules/:module_code/group/tutorial/student"
                 render={props => (
                   <TutorialGroupsStudent
@@ -143,7 +144,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 path="/modules/:module_code/group/tutorial/prof"
                 render={props => (
                   <TutorialGroupsProf
@@ -151,7 +152,7 @@ class App extends Component {
                     module_code={props.match.params.module_code}
                   />
                 )}
-              />
+              /> */}
               <Route
                 path="/modules/:module_code/group/project/student"
                 render={props => (
@@ -161,7 +162,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 path="/modules/:module_code/group/project/prof"
                 render={props => (
                   <ProjectGroupsProf

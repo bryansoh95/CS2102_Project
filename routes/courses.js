@@ -231,6 +231,20 @@ WHERE module_code = $1
 AND tutorial_group = $2
 `;
 
+const GET_STUDENT_PROJECT_GROUP_FOR_MODULE = `
+SELECT project_group
+FROM Enrolls
+WHERE module_code = $1
+AND suname = $2
+`;
+
+const GET_STUDENTS_FROM_COURSE_PROJECT_GROUP = `
+SELECT name
+FROM Enrolls E JOIN Users U ON E.suname = U.username
+WHERE module_code = $1
+AND project_group = $2
+`;
+
 const DELETE_COURSE_THREAD = `
 DELETE FROM Threads 
 WHERE module_code = $1
@@ -238,7 +252,7 @@ AND category = $2
 AND thread_title = $3
 `;
 
-router.post("/course/group/student", (req, res, next) => {
+router.post("/course/group/tutorial/student", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     username: req.body.username
@@ -256,7 +270,7 @@ router.post("/course/group/student", (req, res, next) => {
   );
 });
 
-router.post("/course/group/allStudents", (req, res, next) => {
+router.post("/course/group/tutorial/allStudents", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     tutorial_group: req.body.tutorial_group
@@ -264,6 +278,42 @@ router.post("/course/group/allStudents", (req, res, next) => {
   pool.query(
     GET_STUDENTS_FROM_COURSE_TUTORIAL_GROUP,
     [data.module_code, data.tutorial_group],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/group/project/student", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    username: req.body.username
+  };
+  pool.query(
+    GET_STUDENT_PROJECT_GROUP_FOR_MODULE,
+    [data.module_code, data.username],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/group/project/allStudents", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    project_group: req.body.project_group
+  };
+  pool.query(
+    GET_STUDENTS_FROM_COURSE_PROJECT_GROUP,
+    [data.module_code, data.project_group],
     (err, dbRes) => {
       if (err) {
         res.send("error!");

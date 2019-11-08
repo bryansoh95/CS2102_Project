@@ -12,26 +12,26 @@ import {
 import axios from "axios";
 import { connect } from "react-redux";
 
-class TutorialGroupsStudent extends Component {
+class ProjectGroupsStudent extends Component {
   constructor(props) {
     super(props);
-    this.state = { moduleTutorialGroupStudents: [], tutorialGroup: "" };
+    this.state = { moduleProjectGroupStudents: [], projectGroup: "" };
   }
 
   componentDidMount() {
-    axios // find student's tutorial group for this mod
-      .post("/course/group/tutorial/student", {
+    axios // find student's project group for this mod
+      .post("/course/group/project/student", {
         module_code: this.props.module_code,
         username: this.props.user.username
       })
-      .then(res => this.setState({ tutorialGroup: res.data[0].tutorial_group }))
+      .then(res => this.setState({ projectGroup: res.data[0].project_group }))
       .then(res =>
-        axios // get all students in this tutorial group
-          .post("/course/group/tutorial/allStudents", {
+        axios // get all students in this project group
+          .post("/course/group/project/allStudents", {
             module_code: this.props.module_code,
-            tutorial_group: this.state.tutorialGroup
+            project_group: this.state.projectGroup
           })
-          .then(res => this.setState({ moduleTutorialGroupStudents: res.data }))
+          .then(res => this.setState({ moduleProjectGroupStudents: res.data }))
           .catch(err => console.log(err))
       )
       .catch(err => console.log(err));
@@ -46,18 +46,18 @@ class TutorialGroupsStudent extends Component {
           </Col>
           <Col>
             <h1 className="mt-5">
-              {this.props.module_code} Tutorial Group {this.state.tutorialGroup}
+              {this.props.module_code} Project Group {this.state.projectGroup}
             </h1>
             <p
               style={{
-                display: this.state.tutorialGroup ? "none" : "block"
+                display: this.state.projectGroup ? "none" : "block"
               }}
               className="ml-1 mt-3"
             >
-              You have yet to be assigned to any tutorial group for this module.
+              You have yet to be assigned to any project group for this module.
             </p>
             <ListGroup className="mr-5">
-              {this.state.moduleTutorialGroupStudents.map(student => (
+              {this.state.moduleProjectGroupStudents.map(student => (
                 <ListGroupItem>
                   <Row>
                     <i className="small material-icons">account_circle</i>
@@ -81,4 +81,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-export default connect(mapStateToProps)(TutorialGroupsStudent);
+export default connect(mapStateToProps)(ProjectGroupsStudent);
