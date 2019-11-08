@@ -7,7 +7,8 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemText,
+  Button
 } from "reactstrap";
 import axios from "axios";
 import FormA from "../components/FormA";
@@ -31,6 +32,15 @@ class Announcements extends Component {
       })
       .catch(err => console.log(err));
   }
+
+  handleClick = title => {
+    axios.post("/course/announcements/delete", {
+      module_code: this.props.module_code,
+      title: title,
+      puname: this.props.user.username
+    });
+    window.location.reload();
+  };
 
   render() {
     return (
@@ -74,6 +84,10 @@ class Announcements extends Component {
                         {announcement.title}
                         <hr />
                       </ListGroupItemHeading>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={{ size: 9 }}>
                       <ListGroupItemText>
                         {announcement.content}
                       </ListGroupItemText>
@@ -81,10 +95,16 @@ class Announcements extends Component {
                         {announcement.timestamp} | {announcement.name}
                       </ListGroupItemText>
                     </Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col>
+
+                    <Col
+                      xs="text-xs-right"
+                      style={{
+                        display:
+                          this.props.user.username.substring(0, 1) === "A"
+                            ? "block"
+                            : "none"
+                      }}
+                    >
                       <FormA
                         firstPostRoute="/course/announcements/edit"
                         buttonLabel="EDIT"
@@ -97,6 +117,23 @@ class Announcements extends Component {
                           old_title: announcement.title
                         }}
                       />
+                    </Col>
+                    <Col
+                      xs="text-xs-left"
+                      style={{
+                        display:
+                          this.props.user.username.substring(0, 1) === "A"
+                            ? "block"
+                            : "none"
+                      }}
+                      className="ml-2"
+                    >
+                      <Button
+                        color="danger"
+                        onClick={() => this.handleClick(announcement.title)}
+                      >
+                        Delete
+                      </Button>
                     </Col>
                   </Row>
                 </ListGroupItem>
