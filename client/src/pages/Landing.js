@@ -28,7 +28,12 @@ class Landing extends Component {
           <Col sm={{ offset: 1 }}>
             <h2>Welcome, {this.props.user.name}</h2>
           </Col>
-          <Col sm={{ size: 5, order: 2 }}>
+          <Col style={{
+            display:
+              this.props.user.username.substring(0, 1) === "E"
+                ? "block"
+                : "none"
+          }} sm={{ size: 5, order: 2 }}>
             {/* {this.state.showComponent ? <CollapseForm /> : null} */}
             <RequestCollapseForm />
           </Col>
