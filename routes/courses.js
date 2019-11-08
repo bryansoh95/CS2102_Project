@@ -144,6 +144,14 @@ FROM Assessment
 WHERE module_code = $1
 `;
 
+const GET_CURRENT_ASSESSMENT_SCORES = `
+SELECT *
+FROM Scores S NATURAL JOIN Assessment A, Users U
+WHERE module_code = $1
+AND title = $2
+AND S.suname = U.username
+`;
+
 const ADD_NEW_COURSE_ASSESSMENT = `
 INSERT INTO Assessment
 VALUES ($1, $2, $3)
@@ -610,6 +618,20 @@ router.post("/course/assessment", (req, res, next) => {
   });
 });
 
+router.post("/course/assessment/scores", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    title: req.body.title
+  };
+  pool.query(GET_CURRENT_ASSESSMENT_SCORES, [data.module_code, data.title], (err, dbRes) => {
+    if (err) {
+      res.send("error!");
+    } else {
+      res.send(dbRes.rows);
+    }
+  });
+});
+
 router.post("/course/assessment/add", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
@@ -734,7 +756,7 @@ router.post("/course/gradebook", (req, res, next) => {
 router.post("/course/gradebook/add", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
-    title: req.body.title,
+    title: req.body.assessment_title,
     score: req.body.score,
     suname: req.body.suname,
     puname: req.body.puname

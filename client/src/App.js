@@ -17,6 +17,7 @@ import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
 import SearchResults from "./pages/SearchResults";
 import TutorialGroups from "./pages/TutorialGroups";
+import Assessment from './pages/Assessment'
 
 class App extends Component {
   constructor(props) {
@@ -118,6 +119,25 @@ class App extends Component {
                   <TutorialGroups
                     {...props}
                     module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                exact path="/modules/:module_code/assessment"
+                render={props => (
+                  <Assessment
+                    {...props}
+                    module_code={props.match.params.module_code}
+                  />
+                )}
+              />
+              <Route
+                path="/modules/:module_code/assessment/:assessment_title"
+                render={props => (
+                  <Gradebook
+                    {...props}
+                    module_code={props.match.params.module_code}
+                    assessment_title={props.match.params.assessment_title}
                   />
                 )}
               />

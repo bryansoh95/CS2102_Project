@@ -36,7 +36,10 @@ const FormA = (props) => {
         data['puname'] = props.user.username
         data['thread_title'] = firstInput
         data['title'] = firstInput
+        data['suname'] = firstInput
         data['content'] = secondInput
+        data['max_mark'] = secondInput
+        data['score'] = secondInput
         axios.post(firstPostRoute, data)
         .then(res => {
             if (secondPostRoute) {
