@@ -49,7 +49,7 @@ class ModuleRequests extends Component {
 
   handleReject = index => {
     axios
-      .post("/course/deleteRequest", {
+      .post("/course/request/delete", {
         suname: this.state.moduleRequests[index].suname,
         module_code: this.props.module_code
       })

@@ -231,6 +231,13 @@ WHERE module_code = $1
 AND tutorial_group = $2
 `;
 
+const DELETE_COURSE_THREAD = `
+DELETE FROM Threads 
+WHERE module_code = $1
+AND category = $2
+AND thread_title = $3
+`;
+
 router.post("/course/group/student", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
@@ -257,6 +264,25 @@ router.post("/course/group/allStudents", (req, res, next) => {
   pool.query(
     GET_STUDENTS_FROM_COURSE_TUTORIAL_GROUP,
     [data.module_code, data.tutorial_group],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/thread/delete", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    category: req.body.category,
+    thread_title: req.body.thread_title
+  };
+  pool.query(
+    DELETE_COURSE_THREAD,
+    [data.module_code, data.category, data.thread_title],
     (err, dbRes) => {
       if (err) {
         res.send("error!");
@@ -389,7 +415,7 @@ router.post("/course/add", (req, res, next) => {
   );
 });
 
-router.post("/course/deleteRequest", (req, res, next) => {
+router.post("/course/request/delete", (req, res, next) => {
   const data = {
     suname: req.body.suname,
     module_code: req.body.module_code

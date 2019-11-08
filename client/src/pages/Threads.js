@@ -7,11 +7,13 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemText,
+  Button
 } from "reactstrap";
 import axios from "axios";
-import FormA from '../components/FormA'
-import CollapseForm from '../components/CollapseForm'
+import FormA from "../components/FormA";
+import CollapseForm from "../components/CollapseForm";
+import { connect } from "react-redux";
 
 class Threads extends Component {
   constructor(props) {
@@ -36,13 +38,30 @@ class Threads extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.history.push({
-      pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
+      pathname: "/modules/" + this.props.module_code + "/forum/search",
+      data: {
         module_code: this.props.module_code,
         query: this.state.query,
         category: this.props.category
       }
     });
   };
+
+  handleDeleteThread = index => {
+    console.log(this.state.moduleForumThreads[index]);
+    axios
+      .post("/course/thread/delete", {
+        module_code: this.state.moduleForumThreads[index].module_code,
+        category: this.state.moduleForumThreads[index].category,
+        thread_title: this.state.moduleForumThreads[index].thread_title
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    console.log(this.state.moduleForumThreads[index].suname);
+    window.location.reload();
+  };
+
   render() {
     return (
       <div>
@@ -54,10 +73,24 @@ class Threads extends Component {
             <Row className="mt-5 mb-3">
               <Col sm={{ size: 8, order: 1 }}>
                 <div>
-                  <h1 className='mt-3'>{this.props.module_code} {this.props.category} Forum</h1>
+                  <h1 className="mt-3">
+                    {this.props.module_code} {this.props.category} Forum
+                  </h1>
                 </div>
-                <div className='mt-4 mb-3'>
-                  <FormA firstPostRoute='/course/forum/thread/new' secondPostRoute='/course/forum/thread/posts/new' data={{"module_code": this.props.module_code, "category": this.props.category}} buttonLabel='Create new Thread' formHeader='Create new Thread' firstField='Thread Title' secondField='Post Content' action='Create' />
+                <div>
+                  <FormA
+                    firstPostRoute="/course/forum/thread/new"
+                    secondPostRoute="/course/forum/thread/posts/new"
+                    data={{
+                      module_code: this.props.module_code,
+                      category: this.props.category
+                    }}
+                    buttonLabel="Create new Thread"
+                    formHeader="Create new Thread"
+                    firstField="Thread Title"
+                    secondField="Post Content"
+                    action="Create"
+                  />
                 </div>
               </Col>
               <Col sm={{ size: 3, order: 2 }}>
@@ -73,7 +106,9 @@ class Threads extends Component {
                             value={this.state.query}
                             onChange={this.handleChange}
                           />
-                          <label for="autocomplete-input">Search Posts in {this.props.category}</label>
+                          <label for="autocomplete-input">
+                            Search Posts in {this.props.category}
+                          </label>
                           <i class="material-icons prefix">search</i>
                         </div>
                       </div>
@@ -83,27 +118,49 @@ class Threads extends Component {
               </Col>
             </Row>
 
-
             <ListGroup className="mr-5">
-              {this.state.moduleForumThreads.map(thread => (
-                <ListGroupItem action tag="button">
-                  <ListGroupItemHeading>
-                    <Link
-                      to={
-                        "/modules/" +
-                        thread.module_code +
-                        "/forum/" +
-                        thread.category +
-                        "/" +
-                        thread.thread_title
-                      }
+              {this.state.moduleForumThreads.map((thread, index) => (
+                <ListGroupItem
+                  action
+                  tag="button"
+                  style={{ background: "WhiteSmoke" }}
+                >
+                  <Row>
+                    <Col>
+                      <ListGroupItemHeading>
+                        <Link
+                          to={
+                            "/modules/" +
+                            thread.module_code +
+                            "/forum/" +
+                            thread.category +
+                            "/" +
+                            thread.thread_title
+                          }
+                        >
+                          {thread.thread_title}
+                        </Link>
+                      </ListGroupItemHeading>
+                      <ListGroupItemText>
+                        Created by {thread.name} on{" "}
+                        {thread.timestamp.substring(0, 10)},{" "}
+                        {thread.timestamp.substring(10)}
+                      </ListGroupItemText>
+                    </Col>
+                    <Button
+                      color="danger"
+                      className="mr-3 mt-1"
+                      style={{
+                        display:
+                          this.props.user.username.substring(0, 1) === "A"
+                            ? "block"
+                            : "none"
+                      }}
+                      onClick={() => this.handleDeleteThread(index)}
                     >
-                      {thread.thread_title}
-                    </Link>
-                  </ListGroupItemHeading>
-                  <ListGroupItemText>
-                    Created by {thread.name} on {thread.timestamp.substring(0, 10)}, {thread.timestamp.substring(10)}
-                  </ListGroupItemText>
+                      delete thread
+                    </Button>
+                  </Row>
                 </ListGroupItem>
               ))}
             </ListGroup>
@@ -114,4 +171,8 @@ class Threads extends Component {
   }
 }
 
-export default Threads;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(Threads);
