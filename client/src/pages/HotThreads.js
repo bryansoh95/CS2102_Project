@@ -56,28 +56,35 @@ class HotThreads extends Component {
               </Col>
             </Row>
 
-            <ListGroup>
+            <ListGroup className='mr-5'>
               {this.state.hotThreads.map(thread => (
                 <ListGroupItem action tag="button">
-                  <ListGroupItemHeading>
-                    <Link
-                      to={
-                        "/modules/" +
-                        thread.module_code +
-                        "/forum/" +
-                        thread.category +
-                        "/" +
-                        thread.thread_title
-                      }
-                    >
-                      {thread.thread_title}
-                    </Link>
-                  </ListGroupItemHeading>
-                  <ListGroupItemText>
-                    Created by {thread.name} on{" "}
-                    {thread.timestamp.substring(0, 10)},{" "}
-                    {thread.timestamp.substring(10)}
-                  </ListGroupItemText>
+                  <Row>
+                    <Col sm={{ size: 8, order: 1 }}>
+                      <ListGroupItemHeading>
+                        <Link
+                          to={
+                            "/modules/" +
+                            thread.module_code +
+                            "/forum/" +
+                            thread.category +
+                            "/" +
+                            thread.thread_title
+                          }
+                        >
+                          {thread.category}: {thread.thread_title}
+                        </Link>
+                      </ListGroupItemHeading>
+                      <ListGroupItemText className='mb-0'>
+                        Created by {thread.name} on{" "}
+                        {thread.timestamp.substring(0, 10)},{" "}
+                        {thread.timestamp.substring(10)}
+                      </ListGroupItemText>
+                    </Col>
+                    <Col sm={{ size: 3, order: 2 }}>
+                    <b>Posts: {thread.total_posts}</b>
+                    </Col>
+                  </Row>
                 </ListGroupItem>
               ))}
             </ListGroup>

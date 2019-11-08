@@ -116,7 +116,7 @@ AND LOWER(post_content) LIKE '%' || $3 || '%'
 
 const GET_COURSE_HOT_FORUM_THREADS = `
 WITH hottest_cat_and_thread AS (
-  SELECT category, thread_title 
+  SELECT category, thread_title, COUNT(*) AS total_posts
   FROM Posts
   WHERE module_code = $1
   GROUP BY category, thread_title
@@ -127,11 +127,10 @@ WITH hottest_cat_and_thread AS (
       GROUP BY category, thread_title
   )
 )
-SELECT t.module_code, t.category, t.thread_title, t.uname, u.name, TO_CHAR(t.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp 
-FROM Threads t JOIN Users u ON t.uname = u.username
-WHERE module_code = $1
-AND category = (SELECT category FROM hottest_cat_and_thread)
-AND thread_title = (SELECT thread_title FROM hottest_cat_and_thread)
+SELECT DISTINCT t.module_code, t.category, t.thread_title, t.uname, u.name, TO_CHAR(t.timestamp, 'dd-mm-yyyy hh12:mi am') AS timestamp, hottest_cat_and_thread.total_posts
+FROM hottest_cat_and_thread NATURAL JOIN Threads T, Users U
+WHERE T.uname = U.username
+AND T.module_code = $1
 `;
 
 router.post("/course/forum", (req, res, next) => {
@@ -260,6 +259,7 @@ router.post("/course/forum/hot", (req, res, next) => {
   };
   pool.query(GET_COURSE_HOT_FORUM_THREADS, [data.module_code], (err, dbRes) => {
     if (err) {
+      console.log(err)
       res.send("error!");
     } else {
       res.send(dbRes.rows);
