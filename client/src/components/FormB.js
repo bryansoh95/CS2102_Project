@@ -28,6 +28,7 @@ const FormB = (props) => {
         data['uname'] = props.user.username
         data['puname'] = props.user.username
         data['post_content'] = input
+        data['score'] = input
         if (!data.category) {
             data['category'] = input
         }

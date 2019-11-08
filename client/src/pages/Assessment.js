@@ -49,7 +49,7 @@ class Assessment extends Component {
                     </Col>
                     <Col>
                         <Row className="mt-5">
-                            <Col sm={{ size: 4, order: 1 }}>
+                            <Col sm={{ size: 2, order: 1 }}>
                                 <h1>{this.props.module_code} Assessment</h1>
                             </Col>
                             <Col className='mt-2' sm={{ size: 3, order: 2 }}>
@@ -60,12 +60,12 @@ class Assessment extends Component {
                             {this.state.moduleAssessments.map((assessment, index) => (
                                 <ListGroupItem>
                                     <Row>
-                                        <Col sm={{ size: 8, order: 1 }}>
+                                        <Col sm={{ size: 6, order: 2 }}>
                                             <Link to={'/modules/' + this.props.module_code + '/assessment/' + assessment.title}>
                                                 <ListGroupItemHeading>{assessment.title}</ListGroupItemHeading>
                                             </Link>
                                         </Col>
-                                        <Col sm={{ size: 2, order: 1 }}>
+                                        <Col sm={{ size: 2, order: 3 }}>
                                             <Button color="danger" onClick={() => this.handleClick(index)}>Delete</Button>{' '}
                                         </Col>
                                     </Row>

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import SideNav from "../components/SideNav";
-import { Row, Col, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from "reactstrap";
+import { Row, Col, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button } from "reactstrap";
 import { connect } from "react-redux";
 import axios from "axios"
 import FormA from '../components/FormA'
+import FormB from '../components/FormB'
 
 class Gradebook extends Component {
   constructor(props) {
@@ -38,6 +39,24 @@ class Gradebook extends Component {
         })
     }
   }
+
+  handleDelete = index => {
+    console.log(this.state.moduleScores[index])
+    axios.post('/course/gradebook/delete', {
+      module_code: this.state.moduleScores[index].module_code,
+      title: this.state.moduleScores[index].title,
+      suname: this.state.moduleScores[index].suname,
+      puname: this.props.user.username
+    })
+      .then(res => {
+        alert('delete success!')
+        window.location.reload()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   render() {
     return (
       <div>
@@ -60,10 +79,10 @@ class Gradebook extends Component {
               </Col>
             </Row>
             <ListGroup className="mr-5">
-              {this.state.moduleScores.map(scores => (
+              {this.state.moduleScores.map((scores, index) => (
                 <ListGroupItem>
                   <Row>
-                    <Col>
+                    <Col sm={{ size: 4, order: 1 }}>
                       <ListGroupItemHeading>{scores.title}</ListGroupItemHeading>
                       <ListGroupItemText style={{
                         display:
@@ -78,8 +97,17 @@ class Gradebook extends Component {
                             : "none"
                       }} className='mb-0'>Marks for {scores.name} ({scores.suname}) </ListGroupItemText>
                     </Col>
-                    <Col>
+                    <Col sm={{ size: 4, order: 2 }}>
                       <ListGroupItemText>{scores.score}/{scores.max_mark}</ListGroupItemText>
+                    </Col>
+                    <Col sm={{ size: 2, order: 3 }} style={{
+                      display:
+                        this.props.user.username.substring(0, 1) === "A"
+                          ? "block"
+                          : "none"
+                    }}>
+                      <FormB postRoute='/course/gradebook/edit' buttonLabel='Update Grade' formHeader='Update Student Grade' field='Grade' action='Update' data={{ 'module_code': scores.module_code, 'title': scores.title, 'suname': scores.suname }} />
+                      <Button color="danger" onClick={() => this.handleDelete(index)}>Delete</Button>{' '}
                     </Col>
                   </Row>
                 </ListGroupItem>
