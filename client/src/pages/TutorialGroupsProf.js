@@ -47,7 +47,7 @@ class TutorialGroupsProf extends Component {
                 <FormA
                   firstPostRoute="/course/group/tutorial/add"
                   buttonLabel="Add Student"
-                  formHeader="Add Student to Tutorial"
+                  formHeader="Add Student to a Tutorial Group"
                   firstField="Student Number"
                   secondField="Tutorial Group"
                   action="Add"

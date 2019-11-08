@@ -53,6 +53,7 @@ const FormA = props => {
     data["max_mark"] = secondInput;
     data["score"] = secondInput;
     data["tutorial_group"] = secondInput;
+    data["project_group"] = secondInput;
     axios
       .post(firstPostRoute, data)
       .then(res => {

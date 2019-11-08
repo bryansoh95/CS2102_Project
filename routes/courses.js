@@ -239,7 +239,7 @@ AND suname = $2
 `;
 
 const GET_STUDENTS_FROM_COURSE_PROJECT_GROUP = `
-SELECT name
+SELECT *
 FROM Enrolls E JOIN Users U ON E.suname = U.username
 WHERE module_code = $1
 AND project_group = $2
@@ -269,19 +269,83 @@ WHERE suname = $2
 AND module_code = $3
 `
 
+const GET_ALL_COURSE_PROJECT_GROUPS = `
+SELECT DISTINCT project_group FROM Enrolls
+WHERE project_group IS NOT NULL
+`
+
+const DELETE_STUDENT_FROM_COURSE_PROJECT_GROUP = `
+UPDATE Enrolls SET project_group = NULL
+WHERE suname = $1
+AND module_code = $2
+`
+
+const ADD_STUDENT_TO_COURSE_PROJECT_GROUP = `
+UPDATE Enrolls SET project_group = $1
+WHERE suname = $2
+AND module_code = $3
+`
+
+router.post("/course/group/project/add", (req, res, next) => {
+  const data = {
+    project_group: req.body.project_group,
+    module_code: req.body.module_code,
+    suname: req.body.suname
+  };
+  pool.query(
+    ADD_STUDENT_TO_COURSE_PROJECT_GROUP,
+    [data.project_group, data.suname, data.module_code],
+    (err, dbRes) => {
+      if (err) {
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/group/project/delete", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    suname: req.body.suname
+  };
+  pool.query(
+    DELETE_STUDENT_FROM_COURSE_PROJECT_GROUP,
+    [data.suname, data.module_code],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.get("/course/project/groups", (req, res, next) => {
+  pool.query(
+    GET_ALL_COURSE_PROJECT_GROUPS,
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
 router.post("/course/group/tutorial/add", (req, res, next) => {
   const data = {
     tutorial_group: req.body.tutorial_group,
     module_code: req.body.module_code,
     suname: req.body.suname
   };
-  console.log(data)
   pool.query(
     ADD_STUDENT_TO_COURSE_TUTORIAL_GROUP,
     [data.tutorial_group, data.suname, data.module_code],
     (err, dbRes) => {
       if (err) {
-        res.send("error!");
       } else {
         res.send(dbRes.rows);
       }
@@ -312,7 +376,6 @@ router.get("/course/tutorial/groups", (req, res, next) => {
     GET_ALL_COURSE_TUTORIAL_GROUPS,
     (err, dbRes) => {
       if (err) {
-        console.log(err)
         res.send("error!");
       } else {
         res.send(dbRes.rows);
