@@ -89,7 +89,7 @@ AND post_id = $6
 `;
 
 const DELETE_POST_ENTRY = `
-DELETE FROM Threads 
+DELETE FROM Posts 
 WHERE module_code = $1
 AND category = $2
 AND thread_title = $3
