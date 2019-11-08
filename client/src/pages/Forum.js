@@ -10,6 +10,8 @@ import {
   ListGroupItemText
 } from "reactstrap";
 import axios from "axios";
+import { connect } from "react-redux";
+import FormB from '../components/FormB'
 
 class Forum extends Component {
   constructor(props) {
@@ -30,10 +32,12 @@ class Forum extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.history.push({pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
-      module_code: this.props.module_code,
-      query: this.state.query
-    }});
+    this.props.history.push({
+      pathname: '/modules/' + this.props.module_code + '/forum/search', data: {
+        module_code: this.props.module_code,
+        query: this.state.query
+      }
+    });
   };
   render() {
     return (
@@ -43,27 +47,41 @@ class Forum extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5 mb-3">{this.props.module_code} Forum</h1>
-            <form onSubmit={this.handleSubmit} className="ml-3">
-              <div class="row">
-                <div class="col">
-                  <div class="row mb-0">
-                    <div class="input-field">
-                      <input
-                        type="text"
-                        id="autocomplete-input"
-                        class="autocomplete"
-                        value={this.state.query}
-                        onChange={this.handleChange}
-                      />
-                      <label for="autocomplete-input">Search Posts in Forums</label>
-                      <i class="material-icons prefix">search</i>
+            <Row className="mt-5 mb-3">
+              <Col sm={{ size: 3, order: 1 }}>
+                <h1 className='mt-3'>{this.props.module_code} Forum</h1>
+              </Col>
+              <Col style={{
+                display:
+                  this.props.user.username.substring(0, 1) === "A"
+                    ? "block"
+                    : "none"
+              }} className='mt-4' sm={{ size: 4, order: 2 }}>
+                <FormB postRoute='/course/forum/add' secondPostRoute='/course/forum/thread/posts/new' data={{ "module_code": this.props.module_code }} buttonLabel='Create new Forum' formHeader='Create new Forum' field='Forum Name' action='Create' />
+              </Col>
+              <Col sm={{ size: 3, order: 3 }}>
+                <form onSubmit={this.handleSubmit} className="ml-3">
+                  <div class="row">
+                    <div class="col">
+                      <div class="row mb-0">
+                        <div class="input-field">
+                          <input
+                            type="text"
+                            id="autocomplete-input"
+                            class="autocomplete"
+                            value={this.state.query}
+                            onChange={this.handleChange}
+                          />
+                          <label for="autocomplete-input">Search Posts in Forum</label>
+                          <i class="material-icons prefix">search</i>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </form>
-            <ListGroup>
+                </form>
+              </Col>
+            </Row>
+            <ListGroup className="mr-5">
               {this.state.moduleForums.map(forum => (
                 <Link
                   to={
@@ -85,4 +103,8 @@ class Forum extends Component {
   }
 }
 
-export default Forum;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Forum);

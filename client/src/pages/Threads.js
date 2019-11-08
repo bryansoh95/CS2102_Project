@@ -84,7 +84,7 @@ class Threads extends Component {
             </Row>
 
 
-            <ListGroup>
+            <ListGroup className="mr-5">
               {this.state.moduleForumThreads.map(thread => (
                 <ListGroupItem action tag="button">
                   <ListGroupItemHeading>

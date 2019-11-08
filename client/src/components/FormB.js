@@ -26,11 +26,12 @@ const FormB = (props) => {
 
     const handleSubmit = () => {
         data['uname'] = props.user.username
+        data['puname'] = props.user.username
         data['post_content'] = input
+        data['category'] = input
         axios.post(postRoute, data)
         .then(res => {
             window.location.reload()
-            alert('new insert success!')
         })
         .catch(err => {
             console.log(err)
