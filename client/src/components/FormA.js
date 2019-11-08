@@ -40,6 +40,7 @@ const FormA = (props) => {
         data['content'] = secondInput
         data['max_mark'] = secondInput
         data['score'] = secondInput
+        data['tutorial_group'] = secondInput
         axios.post(firstPostRoute, data)
         .then(res => {
             if (secondPostRoute) {

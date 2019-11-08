@@ -10,6 +10,8 @@ import {
   ListGroupItemText
 } from "reactstrap";
 import axios from "axios";
+import { connect } from "react-redux";
+import FormA from '../components/FormA'
 
 class Tutors extends Component {
   constructor(props) {
@@ -32,7 +34,14 @@ class Tutors extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5">{this.props.module_code} Tutors</h1>
+            <Row className="mt-5">
+              <Col>
+                <h1>{this.props.module_code} Tutors</h1>
+              </Col>
+              <Col>
+                <FormA firstPostRoute='/course/tutors/add' buttonLabel='Add Tutor' formHeader='Add new Tutor' firstField='Tutor Student Number' secondField='Tutorial Group Number' action='Add' data={{ 'module_code': this.props.module_code }} />
+              </Col>
+            </Row>
             <ListGroup className="mr-5">
               {this.state.tutors.map(tutor => (
                 <ListGroupItem>
@@ -51,4 +60,8 @@ class Tutors extends Component {
   }
 }
 
-export default Tutors;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Tutors);
