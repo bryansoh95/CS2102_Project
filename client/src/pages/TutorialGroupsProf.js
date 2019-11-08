@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import { connect } from "react-redux";
 import axios from "axios";
-// import FormA from "../components/FormA";
 
 class TutorialGroupsProf extends Component {
   constructor(props) {
@@ -22,32 +21,14 @@ class TutorialGroupsProf extends Component {
   }
   componentDidMount() {
     axios
-      .post("/course/assessment", {
-        module_code: this.props.module_code
-      })
+      .get("/course/tutorial/groups")
       .then(res => {
-        this.setState({ moduleAssessments: res.data });
+        this.setState({ moduleTutorialGroups: res.data });
       })
       .catch(err => {
         console.log(err);
       });
   }
-
-  handleClick = index => {
-    axios
-      .post("/course/assessment/delete", {
-        module_code: this.props.module_code,
-        title: this.state.moduleAssessments[index].title,
-        puname: this.props.user.username
-      })
-      .then(res => {
-        alert("delete success!");
-        window.location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
 
   render() {
     return (
@@ -58,47 +39,29 @@ class TutorialGroupsProf extends Component {
           </Col>
           <Col>
             <Row className="mt-5">
-              <Col sm={{ size: 4, order: 1 }}>
-                <h1>{this.props.module_code} Assessment</h1>
-              </Col>
-              <Col className="mt-2" sm={{ size: 3, order: 2 }}>
-                <FormA
-                  firstPostRoute="/course/assessment/add"
-                  data={{ module_code: this.props.module_code }}
-                  buttonLabel="Create Assessment"
-                  formHeader="Create Assessment"
-                  firstField="Assessment Title"
-                  secondField="Max Marks"
-                  action="Create"
-                />
-              </Col>
+              <h1>{this.props.module_code} Tutorial Groups</h1>
             </Row>
             <ListGroup className="mr-5">
-              {this.state.moduleAssessments.map((assessment, index) => (
+              {this.state.moduleTutorialGroups.map((groups, index) => (
                 <ListGroupItem>
                   <Row>
                     <Col>
                       <Link
-                        to={
-                          "/modules/" +
-                          this.props.module_code +
-                          "/assessment/" +
-                          assessment.title
-                        }
+                        to=
+                        {{
+                          pathname: "/modules/" +
+                            this.props.module_code +
+                            "/group/tutorial/student",
+                          state: {
+                            tutorial_group: groups.tutorial_group
+                          }
+                        }}
                       >
                         <ListGroupItemHeading>
-                          {assessment.title}
+                          Tutorial Group: {groups.tutorial_group}
                         </ListGroupItemHeading>
                       </Link>
                     </Col>
-
-                    <Button
-                      color="danger"
-                      className="mr-3 mt-1"
-                      onClick={() => this.handleClick(index)}
-                    >
-                      Delete
-                    </Button>
                   </Row>
                 </ListGroupItem>
               ))}

@@ -252,7 +252,26 @@ AND category = $2
 AND thread_title = $3
 `;
 
-router.post("/course/group/tutorial/student", (req, res, next) => {
+const GET_ALL_COURSE_TUTORIAL_GROUPS = `
+SELECT DISTINCT tutorial_group FROM Enrolls
+WHERE tutorial_group IS NOT NULL
+`
+
+router.get("/course/tutorial/groups", (req, res, next) => {
+  pool.query(
+    GET_ALL_COURSE_TUTORIAL_GROUPS,
+    (err, dbRes) => {
+      if (err) {
+        console.log(err)
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/group/student", (req, res, next) => {
   const data = {
     module_code: req.body.module_code,
     username: req.body.username
