@@ -133,7 +133,6 @@ DROP FUNCTION IF EXISTS validate_passed_students CASCADE;
 DROP FUNCTION IF EXISTS validate_course_requests CASCADE;
 DROP FUNCTION IF EXISTS validate_tutors CASCADE;
 DROP FUNCTION IF EXISTS validate_thread_and_post_starters CASCADE;
-DROP FUNCTION IF EXISTS determine_forum_bonus_marks CASCADE;
 DROP FUNCTION IF EXISTS cascade_weak_entities_when_modules_inactive CASCADE;
 DROP FUNCTION IF EXISTS set_professor_courses_to_inactive_professors_delete CASCADE;
 DROP FUNCTION IF EXISTS set_professor_courses_to_inactive_teaches_delete CASCADE;
@@ -394,55 +393,6 @@ BEFORE INSERT OR UPDATE
 ON Scores
 FOR EACH ROW
 EXECUTE PROCEDURE validate_scores_marks_within_max_marks();
-
-CREATE FUNCTION determine_forum_bonus_marks()
-RETURNS TRIGGER AS
-$$
-BEGIN
-	IF 
-		-- checks if there are at least 2 distinct forum posts for a category
-		EXISTS (
-			SELECT 1
-			FROM Posts P 
-			WHERE P.uname = NEW.uname
-			AND P.module_code = NEW.module_code
-			GROUP BY P.category
-			HAVING COUNT(DISTINCT P.thread_title) >= 2
-			)
-	THEN
-		-- determining how many times to credit 0.1 score for the student
-		UPDATE Scores S SET score = (SELECT COUNT(*) / 2 * 0.1 FROM (
-			SELECT 1
-			FROM Posts P 
-			WHERE P.uname = NEW.uname
-			AND P.module_code = NEW.module_code
-			GROUP BY P.category, P.thread_title
-			HAVING P.category IN (
-				SELECT P.category
-				FROM Posts P 
-				WHERE P.uname = NEW.uname
-				AND P.module_code = NEW.module_code
-				GROUP BY P.category
-				HAVING COUNT(P.thread_title) >= 2
-				)
-			) 
-		AS X)
-		WHERE NEW.uname = S.suname
-		AND NEW.module_code = S.module_code
-		AND S.title = 'Forum Bonus';
-		RETURN NEW;
-	ELSE
-		RETURN NULL;
-	END IF;
-END;
-$$
-LANGUAGE plpgsql;
-
--- CREATE TRIGGER determine_forum_bonus_marks
--- AFTER INSERT OR UPDATE
--- ON Posts
--- FOR EACH ROW
--- EXECUTE PROCEDURE determine_forum_bonus_marks();
 
 CREATE FUNCTION cascade_weak_entities_when_modules_inactive()
 RETURNS TRIGGER AS
