@@ -72,7 +72,7 @@ class ProjectGroupProf extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleProjectGroups.map((groups, index) => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <Link

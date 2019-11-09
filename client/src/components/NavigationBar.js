@@ -5,9 +5,6 @@ import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
 
 class NavigationBar extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   doLogout = () => {
     this.props.logout();

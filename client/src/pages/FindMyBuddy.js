@@ -29,7 +29,7 @@ class FindMyBuddy extends Component {
           <div className="col s12 center-align">
             <h1 className="pl-4">FindMyBuddy™</h1>
             <hr></hr>
-            <h1>🙆‍ Here's your buddy List: 🙆‍</h1>
+            <h1><span role='img' aria-label='emoji'>🙆‍</span> Here's your buddy List: <span role='img' aria-label='emoji'>🙆‍</span></h1>
 
             {this.state.buddyList.map(buddy => (
               <h1>

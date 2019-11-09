@@ -1,7 +1,7 @@
 (express = require("express")),
-  (cors = require("cors")),
-  (bodyParser = require("body-parser")),
-  (app = express());
+(cors = require("cors")),
+(bodyParser = require("body-parser")),
+(app = express());
 
 coursesRoute = require("./routes/courses");
 forumsRoute = require("./routes/forums");

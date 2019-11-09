@@ -34,11 +34,11 @@ class ProjectGroupsStudent extends Component {
 
   componentDidMount() {
     if (this.props.location.state) {
-      this.state.projectGroup = this.props.location.state.project_group;
+      this.setState({ projectGroup: this.props.location.state.project_group })
       axios // get all students in this project group
         .post("/course/group/project/allStudents", {
           module_code: this.props.module_code,
-          project_group: this.state.projectGroup
+          project_group: this.props.location.state.project_group
         })
         .then(res => this.setState({ moduleProjectGroupStudents: res.data }))
         .catch(err => console.log(err));
@@ -72,7 +72,7 @@ class ProjectGroupsStudent extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col className="mt-5">
-            <h1>
+            <h1 className='mb-4'>
               {this.props.module_code} Project Group {this.state.projectGroup}
             </h1>
             <div

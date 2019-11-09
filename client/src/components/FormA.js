@@ -24,7 +24,7 @@ const FormA = props => {
   } = props;
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(true);
+  const [unmountOnClose] = useState(true);
 
   const toggle = () => setModal(!modal);
 

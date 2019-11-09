@@ -15,7 +15,7 @@ const FormB = props => {
   const { postRoute, data, buttonLabel, field, formHeader, action } = props;
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(true);
+  const [unmountOnClose] = useState(true);
 
   const toggle = () => setModal(!modal);
 

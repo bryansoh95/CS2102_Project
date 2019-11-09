@@ -4,9 +4,6 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import { connect } from "react-redux";
 
 class SideNav extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div

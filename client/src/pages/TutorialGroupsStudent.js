@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SideNav from "../components/SideNav";
 import {
   Row,
@@ -20,7 +19,7 @@ class TutorialGroupsStudent extends Component {
 
   componentDidMount() {
     if (this.props.location.state) {
-      this.state.tutorialGroup = this.props.location.state.tutorial_group;
+      this.setState({ tutorialGroup: this.props.location.state.tutorialGroup })
       axios // get all students in this tutorial group
         .post("/course/group/tutorial/allStudents", {
           module_code: this.props.module_code,
@@ -75,12 +74,13 @@ class TutorialGroupsStudent extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col className="mt-5">
-            <h1>
+            <h1 className='mb-4'>
               {this.props.module_code} Tutorial Group {this.state.tutorialGroup}
             </h1>
             <div
               style={{
-                display: this.state.tutorialGroup ? "none" : "block"
+                display: this.state.tutorialGroup || 
+                this.props.user.username.substring(0, 1) === 'A' ? "none" : "block"
               }}
               className="ml-1 mt-3"
             >

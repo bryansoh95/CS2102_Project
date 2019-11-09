@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/NavigationBar";
 import Landing from "./pages/Landing";
-import Module from "./pages/Module";
 import Gradebook from "./pages/Gradebook";
 import Tutors from "./pages/Tutors";
 import Announcements from "./pages/Announcements";
@@ -14,7 +13,6 @@ import Login from "./pages/Login";
 import PastModules from "./pages/PastModules";
 import { Provider } from "react-redux";
 import store from "./store";
-import axios from "axios";
 import ModuleRequests from "./pages/ModuleRequests";
 import SearchResults from "./pages/SearchResults";
 import TutorialGroupsStudent from "./pages/TutorialGroupsStudent";
@@ -26,10 +24,6 @@ import ProjectGroupsProf from "./pages/ProjectGroupProf";
 import FindMyBuddy from "./pages/FindMyBuddy";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Provider store={store}>
