@@ -30,7 +30,7 @@ class HomePageAnnouncements extends Component {
     return (
       <ListGroup>
         {this.state.latestModuleAnnouncements.map(announcement => (
-          <ListGroupItem>
+          <ListGroupItem style={{ background: "WhiteSmoke" }}>
             <ListGroupItemHeading>
               {announcement.module_code} : {announcement.title}
               <hr />

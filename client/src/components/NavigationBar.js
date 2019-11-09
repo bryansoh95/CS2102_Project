@@ -18,14 +18,25 @@ class NavigationBar extends Component {
   render() {
     return (
       <div>
-        <Navbar fixed='top' style={{ background: "rgb(2, 122, 197)" }} light expand="md">
+        <Navbar
+          fixed="top"
+          style={{ background: "rgb(2, 122, 197)" }}
+          light
+          expand="md"
+        >
           <i className="material-icons">bubble_chart</i>
           <NavbarBrand style={{ color: "white" }} href="/home">
             LuminusAlpha
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
+            <NavItem className="mt-2">
+              <Link style={{ color: "white" }} to="/findMyBuddy">
+                FindMyBuddy
+              </Link>
+            </NavItem>
             <NavItem>
               <NavLink
+                className="mr-2"
                 style={{ color: "white" }}
                 href="https://github.com/bryansoh95/CS2102_Project"
               >

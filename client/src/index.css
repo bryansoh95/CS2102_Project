@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.modal {
+  background-color: inherit !important;
+  max-height: inherit !important;
+}

@@ -25,7 +25,11 @@ class ModuleListingContainer extends Component {
       <ListGroup>
         {this.state.studentModules.map(module => (
           <Link to={"/modules/" + module.module_code + "/announcements"}>
-            <ListGroupItem action tag="button">
+            <ListGroupItem
+              style={{ background: "WhiteSmoke" }}
+              action
+              tag="button"
+            >
               {module.module_code}, {module.name}
             </ListGroupItem>
           </Link>

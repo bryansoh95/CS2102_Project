@@ -2,6 +2,12 @@ const express = require("express");
 const pool = require("../pool");
 const router = express.Router();
 
+const GET_COURSE_STUDENTS = `
+SELECT *
+FROM Enrolls
+WHERE module_code = $1
+`;
+
 const CHECK_IF_STUDENT = `
 SELECT *
 FROM Students
@@ -200,21 +206,25 @@ INSERT INTO Passed
 VALUES ($1, $2, $3, $4, $5)
 `;
 
-const GET_BUDDY_PAIRS = `
-SELECT DISTINCT S1.username, S2.username
-FROM Students S1, Students S2 
-WHERE S1.username < S2.username 
-AND EXISTS (SELECT 1 FROM Passed WHERE suname = S1.username) 
-AND NOT EXISTS (
-	SELECT 1 FROM Passed P1 
-	WHERE suname = S1.username 
-	AND NOT EXISTS (SELECT 1 FROM Passed P2 WHERE suname = S2.username AND module_code = P1.module_code AND academic_year = P1.academic_year AND semester = P1.semester)
-) 
-AND NOT EXISTS (
-	SELECT 1 FROM Passed P2 
-	WHERE suname = S2.username 
-	AND NOT EXISTS (SELECT 1 FROM Passed P1 WHERE suname = S1.username AND module_code = P2.module_code AND academic_year = P2.academic_year AND semester = P2.semester)
+const GET_BUDDYS = `
+WITH BuddyList AS (
+  SELECT DISTINCT S2.username
+  FROM Students S1, Students S2 
+  WHERE S1.username <> S2.username 
+  AND S1.username = $1
+  AND EXISTS (SELECT 1 FROM Passed WHERE suname = S1.username) 
+  AND NOT EXISTS (
+    SELECT 1 FROM Passed P1 
+    WHERE suname = S1.username 
+    AND NOT EXISTS (SELECT 1 FROM Passed P2 WHERE suname = S2.username AND module_code = P1.module_code AND academic_year = P1.academic_year AND semester = P1.semester)
+  ) 
+  AND NOT EXISTS (
+    SELECT 1 FROM Passed P2 
+    WHERE suname = S2.username 
+    AND NOT EXISTS (SELECT 1 FROM Passed P1 WHERE suname = S1.username AND module_code = P2.module_code AND academic_year = P2.academic_year AND semester = P2.semester)
+  )
 )
+SELECT * FROM BuddyList NATURAL JOIN Users
 `;
 
 const GET_STUDENT_TUTORIAL_GROUP_FOR_MODULE = `
@@ -255,36 +265,36 @@ AND thread_title = $3
 const GET_ALL_COURSE_TUTORIAL_GROUPS = `
 SELECT DISTINCT tutorial_group FROM Enrolls
 WHERE tutorial_group IS NOT NULL
-`
+`;
 
 const DELETE_STUDENT_FROM_COURSE_TUTORIAL_GROUP = `
 UPDATE Enrolls SET tutorial_group = NULL
 WHERE suname = $1
 AND module_code = $2
-`
+`;
 
 const ADD_STUDENT_TO_COURSE_TUTORIAL_GROUP = `
 UPDATE Enrolls SET tutorial_group = $1
 WHERE suname = $2
 AND module_code = $3
-`
+`;
 
 const GET_ALL_COURSE_PROJECT_GROUPS = `
 SELECT DISTINCT project_group FROM Enrolls
 WHERE project_group IS NOT NULL
-`
+`;
 
 const DELETE_STUDENT_FROM_COURSE_PROJECT_GROUP = `
 UPDATE Enrolls SET project_group = NULL
 WHERE suname = $1
 AND module_code = $2
-`
+`;
 
 const ADD_STUDENT_TO_COURSE_PROJECT_GROUP = `
 UPDATE Enrolls SET project_group = $1
 WHERE suname = $2
 AND module_code = $3
-`
+`;
 
 router.post("/course/group/project/add", (req, res, next) => {
   const data = {
@@ -323,16 +333,13 @@ router.post("/course/group/project/delete", (req, res, next) => {
 });
 
 router.get("/course/project/groups", (req, res, next) => {
-  pool.query(
-    GET_ALL_COURSE_PROJECT_GROUPS,
-    (err, dbRes) => {
-      if (err) {
-        res.send("error!");
-      } else {
-        res.send(dbRes.rows);
-      }
+  pool.query(GET_ALL_COURSE_PROJECT_GROUPS, (err, dbRes) => {
+    if (err) {
+      res.send("error!");
+    } else {
+      res.send(dbRes.rows);
     }
-  );
+  });
 });
 
 router.post("/course/group/tutorial/add", (req, res, next) => {
@@ -372,16 +379,26 @@ router.post("/course/group/tutorial/delete", (req, res, next) => {
 });
 
 router.get("/course/tutorial/groups", (req, res, next) => {
-  pool.query(
-    GET_ALL_COURSE_TUTORIAL_GROUPS,
-    (err, dbRes) => {
-      if (err) {
-        res.send("error!");
-      } else {
-        res.send(dbRes.rows);
-      }
+  pool.query(GET_ALL_COURSE_TUTORIAL_GROUPS, (err, dbRes) => {
+    if (err) {
+      res.send("error!");
+    } else {
+      res.send(dbRes.rows);
     }
-  );
+  });
+});
+
+router.post("/course/students", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code
+  };
+  pool.query(GET_COURSE_STUDENTS, [data.module_code], (err, dbRes) => {
+    if (err) {
+      res.send("error!");
+    } else {
+      res.send(dbRes.rows);
+    }
+  });
 });
 
 router.post("/course/group/tutorial/student", (req, res, next) => {
@@ -1111,8 +1128,11 @@ router.post("/course/passed/add", (req, res, next) => {
   );
 });
 
-router.get("/course/buddies", (req, res, next) => {
-  pool.query(GET_BUDDY_PAIRS, (err, dbRes) => {
+router.post("/findMyBuddy", (req, res, next) => {
+  const data = {
+    username: req.body.username
+  };
+  pool.query(GET_BUDDYS, [data.username], (err, dbRes) => {
     if (err) {
       res.send("error!");
     } else {

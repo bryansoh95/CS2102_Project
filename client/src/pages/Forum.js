@@ -57,6 +57,23 @@ class Forum extends Component {
     window.location.reload();
   };
 
+  computeForumBonusMarks = () => {
+    axios
+      .post("/course/students", { module_code: this.props.module_code })
+      .then(res => {
+        for (var i = 0; i < res.data.length; i++) {
+          axios
+            .post("/course/forum/bonus", {
+              module_code: this.props.module_code,
+              uname: res.data[i].suname
+            })
+            .catch(err => console.log(err));
+        }
+      })
+      .then(res => alert("Forum bonus marks computed!"))
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div>
@@ -124,7 +141,11 @@ class Forum extends Component {
                         forum.category
                       }
                     >
-                      <ListGroupItem action tag="button">
+                      <ListGroupItem
+                        style={{ background: "WhiteSmoke" }}
+                        action
+                        tag="button"
+                      >
                         <ListGroupItemHeading>
                           {forum.category}
                         </ListGroupItemHeading>
@@ -141,6 +162,7 @@ class Forum extends Component {
                   >
                     <Button
                       color="danger"
+                      className="mt-2"
                       onClick={() =>
                         this.handleDelete(forum.module_code, forum.category)
                       }
@@ -151,16 +173,25 @@ class Forum extends Component {
                 </Row>
               ))}
             </ListGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
             <Button
               color="primary"
-              className="float-right mr-5"
+              className="ml-1"
               onClick={this.hotThreadsRouteChange}
             >
               View Hot Threads
+            </Button>
+            <Button
+              style={{
+                display:
+                  this.props.user.username.substring(0, 1) === "A"
+                    ? "inline"
+                    : "none"
+              }}
+              color="primary"
+              className="ml-1"
+              onClick={this.computeForumBonusMarks}
+            >
+              Compute Forum Bonus Marks
             </Button>
           </Col>
         </Row>

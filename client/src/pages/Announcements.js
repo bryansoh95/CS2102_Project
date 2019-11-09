@@ -77,7 +77,7 @@ class Announcements extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleAnnouncements.map(announcement => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <ListGroupItemHeading>
@@ -87,7 +87,7 @@ class Announcements extends Component {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm={{ size: 9 }}>
+                    <Col sm={{ size: 10 }}>
                       <ListGroupItemText>
                         {announcement.content}
                       </ListGroupItemText>
@@ -95,7 +95,6 @@ class Announcements extends Component {
                         {announcement.timestamp} | {announcement.name}
                       </ListGroupItemText>
                     </Col>
-
                     <Col
                       xs="text-xs-right"
                       style={{

@@ -133,6 +133,63 @@ WHERE T.uname = U.username
 AND T.module_code = $1
 `;
 
+const CALCULATE_FORUM_BONUS = `
+UPDATE Scores S SET score = (SELECT COUNT(*) / 2 * 0.1 FROM (
+  SELECT 1
+  FROM Posts P 
+  WHERE P.uname = $1
+  AND P.module_code = $2
+  GROUP BY P.category, P.thread_title
+  HAVING P.category IN (
+    SELECT P.category
+    FROM Posts P 
+    WHERE P.uname = $1
+    AND P.module_code = $2
+    GROUP BY P.category
+    HAVING COUNT(P.thread_title) >= 2
+    )
+  ) 
+AS X)
+WHERE $1 = S.suname
+AND $2 = S.module_code
+AND S.title = 'Forum Bonus'
+`;
+
+router.post("/course/forum/bonus", (req, res, next) => {
+  const data = {
+    uname: req.body.uname,
+    module_code: req.body.module_code
+  };
+  pool.query(
+    CALCULATE_FORUM_BONUS,
+    [data.uname, data.module_code],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/forum", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code
+  };
+  pool.query(
+    GET_ALL_CATEGORIES_FOR_COURSE,
+    [data.module_code],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
 router.post("/course/forum", (req, res, next) => {
   const data = {
     module_code: req.body.module_code
@@ -259,7 +316,7 @@ router.post("/course/forum/hot", (req, res, next) => {
   };
   pool.query(GET_COURSE_HOT_FORUM_THREADS, [data.module_code], (err, dbRes) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       res.send("error!");
     } else {
       res.send(dbRes.rows);

@@ -21,8 +21,9 @@ import TutorialGroupsStudent from "./pages/TutorialGroupsStudent";
 import ProjectGroupsStudent from "./pages/ProjectGroupsStudent";
 import Assessment from "./pages/Assessment";
 import Groups from "./pages/Groups";
-import TutorialGroupsProf from './pages/TutorialGroupsProf'
-import ProjectGroupsProf from './pages/ProjectGroupProf'
+import TutorialGroupsProf from "./pages/TutorialGroupsProf";
+import ProjectGroupsProf from "./pages/ProjectGroupProf";
+import FindMyBuddy from "./pages/FindMyBuddy";
 
 class App extends Component {
   constructor(props) {
@@ -193,6 +194,7 @@ class App extends Component {
                   />
                 )}
               />
+              <Route path="/findMyBuddy" component={FindMyBuddy} />
             </Switch>
           </div>
         </Router>

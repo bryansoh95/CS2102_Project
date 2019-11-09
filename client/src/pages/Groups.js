@@ -39,7 +39,11 @@ class Groups extends Component {
                       "/group/tutorial/student"
                 }
               >
-                <ListGroupItem action tag="button">
+                <ListGroupItem
+                  style={{ background: "WhiteSmoke" }}
+                  action
+                  tag="button"
+                >
                   <ListGroupItemHeading>Tutorial Groups</ListGroupItemHeading>
                 </ListGroupItem>
               </Link>
@@ -54,7 +58,11 @@ class Groups extends Component {
                       "/group/project/student"
                 }
               >
-                <ListGroupItem action tag="button">
+                <ListGroupItem
+                  style={{ background: "WhiteSmoke" }}
+                  action
+                  tag="button"
+                >
                   <ListGroupItemHeading>Project Groups</ListGroupItemHeading>
                 </ListGroupItem>
               </Link>

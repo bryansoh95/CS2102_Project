@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import { connect } from "react-redux";
 import axios from "axios";
-import FormA from '../components/FormA'
+import FormA from "../components/FormA";
 
 class TutorialGroupsProf extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ class TutorialGroupsProf extends Component {
               <Col sm={{ size: 5 }}>
                 <h1>{this.props.module_code} Tutorial Groups</h1>
               </Col>
-              <Col className='mt-2'>
+              <Col className="mt-2">
                 <FormA
                   firstPostRoute="/course/group/tutorial/add"
                   buttonLabel="Add Student"
@@ -57,13 +57,13 @@ class TutorialGroupsProf extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleTutorialGroups.map((groups, index) => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <Link
-                        to=
-                        {{
-                          pathname: "/modules/" +
+                        to={{
+                          pathname:
+                            "/modules/" +
                             this.props.module_code +
                             "/group/tutorial/student",
                           state: {

@@ -27,8 +27,8 @@ class Login extends Component {
     setTimeout(() => {
       this.props.user.isLoggedIn
         ? this.props.history.push("/home")
-        : alert("Invalid");
-    }, 1000);
+        : console.log("Invalid");
+    }, 500);
   };
 
   render() {

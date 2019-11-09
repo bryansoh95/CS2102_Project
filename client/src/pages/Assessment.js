@@ -75,7 +75,7 @@ class Assessment extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleAssessments.map((assessment, index) => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <Link
@@ -91,7 +91,6 @@ class Assessment extends Component {
                         </ListGroupItemHeading>
                       </Link>
                     </Col>
-
                     <Button
                       color="danger"
                       className="mr-3 mt-1"

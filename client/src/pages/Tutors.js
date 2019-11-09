@@ -53,7 +53,16 @@ class Tutors extends Component {
               <Col sm={{ size: 3, order: 1 }}>
                 <h1>{this.props.module_code} Tutors</h1>
               </Col>
-              <Col className="mt-2" sm={{ size: 8, order: 2 }}>
+              <Col
+                style={{
+                  display:
+                    this.props.user.username.substring(0, 1) === "A"
+                      ? "block"
+                      : "none"
+                }}
+                className="mt-2"
+                sm={{ size: 8, order: 2 }}
+              >
                 <FormA
                   firstPostRoute="/course/tutors/add"
                   buttonLabel="Add Tutor"
@@ -67,28 +76,26 @@ class Tutors extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.tutors.map((tutor, index) => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <ListGroupItemHeading>
                         Tutorial Group {tutor.tutorial_group}: {tutor.name}
                       </ListGroupItemHeading>
                     </Col>
-                    <Col
+                    <Button
                       style={{
                         display:
                           this.props.user.username.substring(0, 1) === "A"
                             ? "block"
                             : "none"
                       }}
+                      color="danger"
+                      className="mr-3 mt-1"
+                      onClick={() => this.handleDelete(index)}
                     >
-                      <Button
-                        color="danger"
-                        onClick={() => this.handleDelete(index)}
-                      >
-                        Delete
-                      </Button>{" "}
-                    </Col>
+                      Delete
+                    </Button>{" "}
                   </Row>
                 </ListGroupItem>
               ))}

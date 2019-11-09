@@ -68,12 +68,16 @@ class ModuleRequests extends Component {
             <SideNav module_code={this.props.module_code} />
           </Col>
           <Col>
-            <h1 className="mt-5">{this.props.module_code} Requests</h1>
+            <Row className="mt-5">
+              <Col sm={{ size: 4, order: 1 }}>
+                <h1>{this.props.module_code} Requests</h1>
+              </Col>
+            </Row>
             <ListGroup className="mr-5">
               {this.state.moduleRequests.map((request, index) => (
                 <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
-                    <Col>
+                    <Col xs="6">
                       <ListGroupItemHeading>
                         {request.name} ({request.suname})
                       </ListGroupItemHeading>
@@ -81,10 +85,7 @@ class ModuleRequests extends Component {
                         Requested on: {request.timestamp}
                       </ListGroupItemText>
                     </Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col className="mt-4">
+                    <Col xs="6" className="text-right mt-2">
                       <Button
                         color="success"
                         onClick={() => this.handleAccept(index)}

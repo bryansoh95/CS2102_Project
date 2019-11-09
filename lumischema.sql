@@ -398,42 +398,38 @@ EXECUTE PROCEDURE validate_scores_marks_within_max_marks();
 CREATE FUNCTION determine_forum_bonus_marks()
 RETURNS TRIGGER AS
 $$
-DECLARE
-	count INTEGER := 0;
-	i INTEGER := 0;
 BEGIN
 	IF 
 		-- checks if there are at least 2 distinct forum posts for a category
 		EXISTS (
 			SELECT 1
 			FROM Posts P 
-			GROUP BY NEW.module_code, NEW.uname, P.category
+			WHERE P.uname = NEW.uname
+			AND P.module_code = NEW.module_code
+			GROUP BY P.category
 			HAVING COUNT(DISTINCT P.thread_title) >= 2
 			)
 	THEN
 		-- determining how many times to credit 0.1 score for the student
-		SELECT COUNT(*) FROM (
-			SELECT NEW.uname, P.category
+		UPDATE Scores S SET score = (SELECT COUNT(*) / 2 * 0.1 FROM (
+			SELECT 1
 			FROM Posts P 
-			GROUP BY NEW.module_code, NEW.uname, P.category
-			HAVING COUNT(DISTINCT P.thread_title) >= 2
+			WHERE P.uname = NEW.uname
+			AND P.module_code = NEW.module_code
+			GROUP BY P.category, P.thread_title
+			HAVING P.category IN (
+				SELECT P.category
+				FROM Posts P 
+				WHERE P.uname = NEW.uname
+				AND P.module_code = NEW.module_code
+				GROUP BY P.category
+				HAVING COUNT(P.thread_title) >= 2
+				)
 			) 
-		AS X
-		INTO count;
-		-- resetting 'Bonus' score to 0 
-		UPDATE Scores S SET score = 0
+		AS X)
 		WHERE NEW.uname = S.suname
 		AND NEW.module_code = S.module_code
 		AND S.title = 'Forum Bonus';
-		-- looping through to add 0.1 for every 2 distinct post in different forum categories
-		LOOP
-			EXIT WHEN i = count;
-			UPDATE Scores S SET score = score + 0.1
-			WHERE NEW.uname = S.suname
-			AND NEW.module_code = S.module_code
-			AND S.title = 'Forum Bonus';
-			i = i + 1;
-		END LOOP;
 		RETURN NEW;
 	ELSE
 		RETURN NULL;
@@ -442,11 +438,11 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER determine_forum_bonus_marks
-AFTER INSERT OR UPDATE
-ON Posts
-FOR EACH ROW
-EXECUTE PROCEDURE determine_forum_bonus_marks();
+-- CREATE TRIGGER determine_forum_bonus_marks
+-- AFTER INSERT OR UPDATE
+-- ON Posts
+-- FOR EACH ROW
+-- EXECUTE PROCEDURE determine_forum_bonus_marks();
 
 CREATE FUNCTION cascade_weak_entities_when_modules_inactive()
 RETURNS TRIGGER AS

@@ -45,11 +45,16 @@ class SearchResults extends Component {
 
   handleClick = () => {
     if (this.props.location.data.category) {
-      this.props.history.push('/modules/' + this.props.module_code + '/forum/' + this.props.location.data.category)
+      this.props.history.push(
+        "/modules/" +
+          this.props.module_code +
+          "/forum/" +
+          this.props.location.data.category
+      );
     } else {
-      this.props.history.push('/modules/' + this.props.module_code + '/forum')
+      this.props.history.push("/modules/" + this.props.module_code + "/forum");
     }
-  }
+  };
 
   render() {
     return (
@@ -58,12 +63,27 @@ class SearchResults extends Component {
           <Col xs="3">
             <SideNav module_code={this.props.module_code} />
           </Col>
-          <Col style={{ display: this.state.postsResult.length !== 0 ? 'block' : 'none' }}>
-            <h1 className="mt-5 mb-5">{this.props.module_code} Forum Search Results</h1>
-            <ListGroup className='mr-5'>
+          <Col
+            style={{
+              display: this.state.postsResult.length !== 0 ? "block" : "none"
+            }}
+          >
+            <h1 className="mt-5 mb-5">
+              {this.props.module_code} Forum Search Results
+            </h1>
+            <ListGroup className="mr-5">
               {this.state.postsResult.map(post => (
-                <ListGroupItem>
-                  <Link to={"/modules/" + this.props.module_code + "/forum/" + post.category + '/' + post.thread_title}>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
+                  <Link
+                    to={
+                      "/modules/" +
+                      this.props.module_code +
+                      "/forum/" +
+                      post.category +
+                      "/" +
+                      post.thread_title
+                    }
+                  >
                     <ListGroupItemHeading>
                       {post.thread_title}
                       <hr />
@@ -77,11 +97,20 @@ class SearchResults extends Component {
               ))}
             </ListGroup>
           </Col>
-          <Col style={{ display: this.state.postsResult.length === 0 ? 'block' : 'none' }}>
-            <h1 className="mt-5 mb-5">{this.props.module_code} Forum Search Results</h1>
-            Sorry, no posts with the keyword '{this.props.location.data.query}' found!
-            <div className='mt-4'>
-              <Button color="info" onClick={this.handleClick}>Back</Button>{' '}
+          <Col
+            style={{
+              display: this.state.postsResult.length === 0 ? "block" : "none"
+            }}
+          >
+            <h1 className="mt-5 mb-5">
+              {this.props.module_code} Forum Search Results
+            </h1>
+            Sorry, no posts with the keyword '{this.props.location.data.query}'
+            found!
+            <div className="mt-4">
+              <Button color="info" onClick={this.handleClick}>
+                Back
+              </Button>{" "}
             </div>
           </Col>
         </Row>

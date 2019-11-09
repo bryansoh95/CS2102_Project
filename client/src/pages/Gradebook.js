@@ -106,7 +106,7 @@ class Gradebook extends Component {
             </Row>
             <ListGroup className="mr-5">
               {this.state.moduleScores.map((scores, index) => (
-                <ListGroupItem>
+                <ListGroupItem style={{ background: "WhiteSmoke" }}>
                   <Row>
                     <Col>
                       <ListGroupItemHeading>
