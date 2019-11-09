@@ -25,8 +25,9 @@ class NavigationBar extends Component {
           expand="md"
         >
           <i className="material-icons">bubble_chart</i>
-          <NavbarBrand style={{ color: "white" }} href="/home">
-            LuminusAlpha
+          <NavbarBrand href="/home">
+            <span style={{ color: "white" }}>Luminus</span>
+            <span style={{ color: "orange" }}>Alpha</span>
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem className="mt-2">

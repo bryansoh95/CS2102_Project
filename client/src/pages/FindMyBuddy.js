@@ -27,10 +27,10 @@ class FindMyBuddy extends Component {
       >
         <div className="row">
           <div className="col s12 center-align">
-            <h1>FindMyBuddy™</h1>
+            <h1 className="pl-4">FindMyBuddy™</h1>
             <hr></hr>
-            <br></br>
             <h1>🙆‍ Here's your buddy List: 🙆‍</h1>
+
             {this.state.buddyList.map(buddy => (
               <h1>
                 <b>[{buddy.name}] </b>
@@ -44,6 +44,10 @@ class FindMyBuddy extends Component {
             >
               Nothing to see here :(
             </h4>
+            <p className="mt-4" style={{ color: "grey" }}>
+              Students who took the exact same modules as you in 2 consecutive
+              semesters!
+            </p>
           </div>
         </div>
       </div>
