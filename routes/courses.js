@@ -17,6 +17,7 @@ WHERE username = $1
 const GET_ALL_COURSES = `
 SELECT *
 FROM Courses
+WHERE is_active
 `;
 
 const GET_STUDENT_COURSES = `
