@@ -6,11 +6,8 @@ import {
   Col,
   ListGroup,
   ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText
+  ListGroupItemHeading
 } from "reactstrap";
-import axios from "axios";
-import FormA from "../components/FormA";
 import { connect } from "react-redux";
 
 class Groups extends Component {

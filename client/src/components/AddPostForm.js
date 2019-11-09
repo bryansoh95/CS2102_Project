@@ -5,11 +5,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText
+  Input
 } from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -18,7 +14,6 @@ class AddPostForm extends Component {
   constructor(props) {
     super(props);
     this.state = { modal: false, post_content: "" };
-    console.log("FORM");
   }
 
   toggleModal = () => this.setState({ modal: !this.state.modal });
@@ -33,7 +28,6 @@ class AddPostForm extends Component {
         post_content: this.state.post_content
       })
       .then(res => {
-        console.log("submitted");
         alert("Post submitted");
       })
       .catch(err => console.log(err));

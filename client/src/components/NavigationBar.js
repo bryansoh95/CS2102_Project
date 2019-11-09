@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
-import { SSL_OP_TLS_ROLLBACK_BUG } from "constants";
 import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
 

@@ -338,7 +338,6 @@ router.post("/course/group/tutorial/delete/current", (req, res, next) => {
       if (err) {
         res.send("error!");
       } else {
-        console.log(dbRes);
         res.send(dbRes.rows);
       }
     }
@@ -862,7 +861,6 @@ router.post("/course/tutors/delete", (req, res, next) => {
 });
 
 router.post("/course/all/request", (req, res, next) => {
-  console.log(req.body.suname + " " + req.body.module_code);
   const data = {
     suname: req.body.suname,
     module_code: req.body.module_code

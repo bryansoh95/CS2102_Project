@@ -7,7 +7,6 @@ import {
   ListGroup,
   ListGroupItem,
   ListGroupItemHeading,
-  ListGroupItemText,
   Button
 } from "reactstrap";
 import axios from "axios";

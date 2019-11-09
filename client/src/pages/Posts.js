@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SideNav from "../components/SideNav";
-import AddPostForm from "../components/AddPostForm";
 import {
   Row,
   Col,
@@ -16,7 +15,6 @@ import FormB from "../components/FormB";
 
 class Posts extends Component {
   constructor(props) {
-    console.log("HELLO");
     super(props);
     this.state = {
       posts: []

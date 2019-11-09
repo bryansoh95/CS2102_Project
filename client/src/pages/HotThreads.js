@@ -10,8 +10,6 @@ import {
   ListGroupItemText
 } from "reactstrap";
 import axios from "axios";
-import FormA from "../components/FormA";
-import CollapseForm from "../components/CollapseForm";
 
 class HotThreads extends Component {
   constructor(props) {

@@ -22,7 +22,6 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    //this.props.logout();
     this.props.validateLogin(userData);
     setTimeout(() => {
       this.props.user.isLoggedIn

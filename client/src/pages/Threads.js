@@ -12,7 +12,6 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import FormA from "../components/FormA";
-import CollapseForm from "../components/CollapseForm";
 import { connect } from "react-redux";
 
 class Threads extends Component {
@@ -48,7 +47,6 @@ class Threads extends Component {
   };
 
   handleDeleteThread = index => {
-    console.log(this.state.moduleForumThreads[index]);
     axios
       .post("/course/thread/delete", {
         module_code: this.state.moduleForumThreads[index].module_code,
@@ -58,7 +56,6 @@ class Threads extends Component {
       .catch(err => {
         console.log(err);
       });
-    console.log(this.state.moduleForumThreads[index].suname);
     window.location.reload();
   };
 

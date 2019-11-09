@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ModuleListingContainer from "../components/ModuleListingContainer";
 import HomePageAnnouncements from "../components/HomePageAnnouncements";
 import RequestCollapseForm from "../components/RequestCollapseForm";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 
 class Landing extends Component {
@@ -12,14 +12,7 @@ class Landing extends Component {
     this.state = {
       showComponent: false
     };
-    // this._onButtonClick = this._onButtonClick.bind(this);
   }
-
-  // _onButtonClick() {
-  //   this.setState({
-  //     showComponent: true
-  //   });
-  // }
 
   render() {
     return (
@@ -28,13 +21,15 @@ class Landing extends Component {
           <Col sm={{ offset: 1 }}>
             <h2>Welcome, {this.props.user.name}</h2>
           </Col>
-          <Col style={{
-            display:
-              this.props.user.username.substring(0, 1) === "E"
-                ? "block"
-                : "none"
-          }} sm={{ size: 5, order: 2 }}>
-            {/* {this.state.showComponent ? <CollapseForm /> : null} */}
+          <Col
+            style={{
+              display:
+                this.props.user.username.substring(0, 1) === "E"
+                  ? "block"
+                  : "none"
+            }}
+            sm={{ size: 5, order: 2 }}
+          >
             <RequestCollapseForm />
           </Col>
         </Row>
@@ -42,12 +37,17 @@ class Landing extends Component {
           <Col sm={{ size: 5, order: 2, offset: 1 }}>
             <h2>Your Modules</h2>
             <ModuleListingContainer />
-            <Link style={{
-              display:
-                this.props.user.username.substring(0, 1) === "E"
-                  ? "block"
-                  : "none"
-            }} to="/modules/past">View your past modules</Link>
+            <Link
+              style={{
+                display:
+                  this.props.user.username.substring(0, 1) === "E"
+                    ? "block"
+                    : "none"
+              }}
+              to="/modules/past"
+            >
+              View your past modules
+            </Link>
           </Col>
           <Col sm={{ size: 5, order: 2 }}>
             <h2>Announcements</h2>

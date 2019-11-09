@@ -398,7 +398,6 @@ router.post("/course/forum/thread/posts/new", (req, res, next) => {
     post_content: req.body.post_content,
     uname: req.body.uname
   };
-  console.log(data);
   pool.query(
     GET_NEXT_POST_ID,
     [data.module_code, data.category, data.thread_title],
@@ -407,7 +406,6 @@ router.post("/course/forum/thread/posts/new", (req, res, next) => {
         res.send("error!");
       } else {
         const post_id = dbRes.rows[0].max + 1;
-        console.log(post_id);
         pool.query(
           NEW_POST_ENTRY,
           [

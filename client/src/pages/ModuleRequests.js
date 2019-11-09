@@ -43,7 +43,6 @@ class ModuleRequests extends Component {
       .catch(err => {
         console.log(err);
       });
-    console.log(this.state.moduleRequests[index].suname);
     window.location.reload();
   };
 
@@ -56,7 +55,6 @@ class ModuleRequests extends Component {
       .catch(err => {
         console.log(err);
       });
-    console.log(this.state.moduleRequests[index].suname);
     window.location.reload();
   };
 

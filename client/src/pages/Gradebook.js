@@ -51,7 +51,6 @@ class Gradebook extends Component {
   }
 
   handleDelete = index => {
-    console.log(this.state.moduleScores[index]);
     axios
       .post("/course/gradebook/delete", {
         module_code: this.state.moduleScores[index].module_code,

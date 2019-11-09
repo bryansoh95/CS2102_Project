@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SideNav from "../components/SideNav";
 import {
   Row,
@@ -21,13 +20,11 @@ class Announcements extends Component {
   }
 
   componentDidMount() {
-    console.log(this);
     axios
       .post("/course/announcements", {
         module_code: this.props.module_code
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ moduleAnnouncements: res.data });
       })
       .catch(err => console.log(err));

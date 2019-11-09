@@ -6,9 +6,7 @@ import {
   ModalBody,
   ModalFooter,
   Input,
-  Label,
-  Form,
-  FormGroup
+  Form
 } from "reactstrap";
 import axios from "axios";
 import { connect } from "react-redux";
