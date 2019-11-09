@@ -296,6 +296,55 @@ WHERE suname = $2
 AND module_code = $3
 `;
 
+const DELETE_COURSE_TUTORIAL_GROUP = `
+UPDATE Enrolls SET tutorial_group = NULL
+WHERE module_code = $1
+AND tutorial_group = $2
+`;
+
+const DELETE_COURSE_PROJECT_GROUP = `
+UPDATE Enrolls SET project_group = NULL
+WHERE module_code = $1
+AND project_group = $2
+`;
+
+router.post("/course/group/project/delete/current", (req, res, next) => {
+  const data = {
+    module_code: req.body.module_code,
+    project_group: req.body.project_group
+  };
+  pool.query(
+    DELETE_COURSE_PROJECT_GROUP,
+    [data.module_code, data.project_group],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
+router.post("/course/group/tutorial/delete/current", (req, res, next) => {
+  const data = {
+    tutorial_group: req.body.tutorial_group,
+    module_code: req.body.module_code
+  };
+  pool.query(
+    DELETE_COURSE_TUTORIAL_GROUP,
+    [data.module_code, data.tutorial_group],
+    (err, dbRes) => {
+      if (err) {
+        res.send("error!");
+      } else {
+        console.log(dbRes);
+        res.send(dbRes.rows);
+      }
+    }
+  );
+});
+
 router.post("/course/group/project/add", (req, res, next) => {
   const data = {
     project_group: req.body.project_group,
@@ -307,6 +356,7 @@ router.post("/course/group/project/add", (req, res, next) => {
     [data.project_group, data.suname, data.module_code],
     (err, dbRes) => {
       if (err) {
+        res.send("error!");
       } else {
         res.send(dbRes.rows);
       }

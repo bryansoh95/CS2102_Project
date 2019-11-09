@@ -20,6 +20,22 @@ class TutorialGroupsProf extends Component {
       moduleTutorialGroups: []
     };
   }
+
+  handleDelete = index => {
+    axios
+      .post("/course/group/tutorial/delete/current", {
+        module_code: this.props.module_code,
+        tutorial_group: this.state.moduleTutorialGroups[index].tutorial_group
+      })
+      .then(res => {
+        alert("delete success!");
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
     axios
       .get("/course/tutorial/groups")
@@ -76,6 +92,13 @@ class TutorialGroupsProf extends Component {
                         </ListGroupItemHeading>
                       </Link>
                     </Col>
+                    <Button
+                      color="danger"
+                      className="mr-3 mt-1"
+                      onClick={() => this.handleDelete(index)}
+                    >
+                      Delete
+                    </Button>
                   </Row>
                 </ListGroupItem>
               ))}
