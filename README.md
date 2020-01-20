@@ -1,4 +1,6 @@
 # CS2102 Project Group 36
+This is a full stack web development project. For this project, a university course management system was built.
+Its functions include creating courses, adding forums, requesting and granting access to courses, and posting announcements to name a few.
 
 Place the directory 'CS2102_Project' in the Desktop.
 Do not close any terminals which you have opened in this README for the span of the testing.
